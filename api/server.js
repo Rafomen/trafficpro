@@ -11,8 +11,35 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..')));
 
+// IP rate limiter: 1 submission per IP per 24 hours
+const submissions = new Map();
+const ONE_DAY = 24 * 60 * 60 * 1000;
+
+function cleanupExpired() {
+  const now = Date.now();
+  for (const [ip, ts] of submissions) {
+    if (now - ts > ONE_DAY) submissions.delete(ip);
+  }
+}
+
+function getClientIp(req) {
+  return req.headers['x-forwarded-for']
+    ? req.headers['x-forwarded-for'].split(',')[0].trim()
+    : req.connection.remoteAddress;
+}
+
 app.post('/api/submit', async (req, res) => {
   try {
+    // Rate limit check
+    cleanupExpired();
+    const ip = getClientIp(req);
+    if (submissions.has(ip)) {
+      return res.status(429).json({
+        success: false,
+        message: 'Вы уже отправляли заявку сегодня. Попробуйте завтра.'
+      });
+    }
+
     const formData = req.body;
     const apiKey = process.env.KEYCRM_API_KEY;
     const sourceId = parseInt(process.env.KEYCRM_SOURCE_ID, 10);
@@ -61,6 +88,9 @@ app.post('/api/submit', async (req, res) => {
 
       throw new Error(errorMessage);
     }
+
+    // Mark IP as submitted only after successful KeyCRM response
+    submissions.set(ip, Date.now());
 
     res.status(200).json({
       success: true,

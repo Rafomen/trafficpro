@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Заявка отправлена — TrafficPro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            dark: { 900: '#0B0F1A', 800: '#111827', 700: '#1E293B', 600: '#334155' },
+            accent: { DEFAULT: '#22C55E', hover: '#16A34A', light: '#4ADE80' },
+            cyan: { DEFAULT: '#06B6D4', light: '#22D3EE' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background: #0B0F1A; }
+    .gradient-text {
+      background: linear-gradient(135deg, #22C55E 0%, #06B6D4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    @keyframes checkPop {
+      0% { transform: scale(0); opacity: 0; }
+      60% { transform: scale(1.2); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .check-pop { animation: checkPop 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+    .fade-up-1 { animation-delay: 0.2s; }
+    .fade-up-2 { animation-delay: 0.4s; }
+    .fade-up-3 { animation-delay: 0.6s; }
+    .fade-up-4 { animation-delay: 0.8s; }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center text-gray-200 font-sans antialiased px-4">
+
+  <div class="max-w-lg w-full text-center py-20">
+
+    <!-- Checkmark -->
+    <div class="check-pop mx-auto w-20 h-20 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center mb-8">
+      <svg class="w-10 h-10 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+      </svg>
+    </div>
+
+    <!-- Title -->
+    <h1 class="fade-up text-3xl sm:text-4xl font-bold text-white mb-3">Заявка отправлена!</h1>
+    <p class="fade-up fade-up-1 text-gray-400 mb-10">Свяжусь с вами в течение 24 часов. А пока — напишите напрямую, чтобы ускорить процесс.</p>
+
+    <!-- Telegram CTA -->
+    <div class="fade-up fade-up-2 glow-border bg-dark-700/50 rounded-2xl p-6 mb-10" style="position:relative;">
+      <style>
+        .glow-border::before {
+          content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+          background: linear-gradient(135deg, rgba(34,197,94,0.3), rgba(6,182,212,0.3));
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+        }
+      </style>
+      <div class="flex items-center gap-3 mb-4 justify-center">
+        <div class="w-10 h-10 rounded-xl bg-[#2AABEE]/20 flex items-center justify-center">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="white"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        </div>
+        <div class="text-left">
+          <p class="text-white font-semibold">Напишите в Telegram</p>
+          <p class="text-gray-500 text-sm">Отвечаю в течение часа</p>
+        </div>
+      </div>
+      <a href="https://t.me/metagoogle_ads" target="_blank" rel="noopener noreferrer"
+        class="block w-full bg-[#2AABEE] hover:bg-[#229ED9] text-white font-semibold py-3.5 rounded-xl text-lg transition-colors cursor-pointer">
+        @metagoogle_ads
+      </a>
+    </div>
+
+    <!-- Submission summary -->
+    <div class="fade-up fade-up-3 bg-dark-700/30 border border-white/5 rounded-2xl p-6 text-left mb-8">
+      <h3 class="text-white font-semibold text-sm uppercase tracking-wider mb-4">Ваша заявка</h3>
+      <div id="submission-data" class="space-y-3 text-sm">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+
+    <!-- Back link -->
+    <a href="/" class="fade-up fade-up-4 inline-flex items-center gap-2 text-gray-500 hover:text-white transition-colors cursor-pointer text-sm">
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+      Вернуться на главную
+    </a>
+  </div>
+
+  <script>
+    // Read submission data from localStorage
+    const NICHE_LABELS = {
+      ecom: 'Товарка / e-commerce',
+      gambling: 'Гембла / беттинг',
+      saas: 'SaaS / подписки',
+      crypto: 'Крипта / Web3',
+      invest: 'Инвестиции',
+      hr: 'Найм сотрудников',
+      retention: 'Chargeback / Retention',
+      other: 'Другое'
+    };
+    const BUDGET_LABELS = {
+      under500: 'До $500',
+      '500-2000': '$500 — $2,000',
+      '2000-5000': '$2,000 — $5,000',
+      '5000+': '$5,000+'
+    };
+    const EXP_LABELS = {
+      yes: 'Да, есть опыт',
+      no: 'Нет, с нуля'
+    };
+
+    try {
+      const data = JSON.parse(localStorage.getItem('trafficpro_submission') || '{}');
+      if (data.name) {
+        const rows = [
+          { label: 'Имя', value: data.name },
+          { label: 'Telegram', value: data.telegram },
+          { label: 'Email', value: data.email },
+          { label: 'Ниша', value: NICHE_LABELS[data.niche] || data.niche },
+          { label: 'Бюджет', value: BUDGET_LABELS[data.budget] || data.budget },
+          { label: 'Опыт', value: EXP_LABELS[data.experience] || data.experience }
+        ];
+        const container = document.getElementById('submission-data');
+        container.innerHTML = rows.map(r => `
+          <div class="flex justify-between gap-4">
+            <span class="text-gray-500">${r.label}</span>
+            <span class="text-white font-medium text-right">${r.value || '—'}</span>
+          </div>
+        `).join('');
+      }
+    } catch (e) {
+      console.error('Failed to load submission data:', e);
+    }
+
+    // CAPI placeholder — fires a page view event
+    // Replace with your actual Meta CAPI / Google Conversion pixel
+    (function() {
+      // Meta CAPI: log Lead event via browser pixel
+      // fbq('track', 'Lead');
+      // Google Ads: gtag('event', 'conversion', {'send_to': 'AW-XXXXX/XXXXX'});
+
+      // For now, log to console for debugging
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('from') === 'form') {
+        console.log('[CAPI] Lead conversion event triggered');
+        console.log('[CAPI] Submission data available in localStorage: trafficpro_submission');
+      }
+    })();
+  </script>
+</body>
+</html>

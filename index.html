@@ -1001,18 +1001,10 @@
         submitBtn.textContent = 'Отправлено!';
         submitBtn.classList.remove('bg-accent', 'hover:bg-accent-hover');
         submitBtn.classList.add('bg-dark-600');
-        successMsg.textContent = 'Заявка отправлена! Свяжусь с вами в течение 24 часов.';
-        successMsg.classList.remove('hidden');
 
-        setTimeout(() => {
-          form.reset();
-          submitBtn.textContent = 'Обсудить проект';
-          submitBtn.disabled = false;
-          submitBtn.classList.add('bg-accent', 'hover:bg-accent-hover');
-          submitBtn.classList.remove('bg-dark-600');
-          successMsg.classList.add('hidden');
-          isSubmitting = false;
-        }, 4000);
+        // Save submission data and redirect to thank-you page
+        localStorage.setItem('trafficpro_submission', JSON.stringify(data));
+        window.location.href = '/thank-you.html?from=form';
 
       } catch (error) {
         errorMsg.textContent = error.message.includes('Failed to fetch')
