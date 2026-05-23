@@ -113,16 +113,28 @@
 
     ::selection { background: #22C55E40; color: #fff; }
 
-    /* Scroll-responsive gradient overlay */
+    /* Fixed background layer — charts + colorful gradient for the WHOLE site */
+    #page-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    #page-bg svg {
+      position: absolute;
+    }
+    /* Color gradient overlay that shifts on scroll */
     #gradient-overlay {
       position: fixed;
       inset: 0;
       z-index: -1;
       pointer-events: none;
-      transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: background 1s cubic-bezier(0.4, 0, 0.2, 1);
       background: linear-gradient(170deg,
-        hsl(230, 40%, 6%) 0%,
-        hsl(230, 40%, 6%) 100%);
+        hsla(230, 50%, 7%, 0.92) 0%,
+        hsla(220, 45%, 6%, 0.92) 50%,
+        hsla(240, 40%, 5%, 0.92) 100%);
     }
 
     ::-webkit-scrollbar { width: 8px; }
@@ -176,6 +188,64 @@
   </style>
 </head>
 <body class="bg-dark-900 text-gray-200 font-sans antialiased" id="page-body">
+  <!-- Fixed background for entire site: blurred charts + colorful gradient -->
+  <div id="page-bg" aria-hidden="true">
+    <!-- Meta Ads bar chart - upper left, large and blurred -->
+    <svg class="-left-[8%] -top-[10%] w-[75%] h-[110%] opacity-[0.18]" viewBox="0 0 900 800" preserveAspectRatio="xMidYMid slice" style="filter: blur(55px);">
+      <defs>
+        <linearGradient id="mb1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1877F2" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#1877F2" stop-opacity="0.1"/>
+        </linearGradient>
+      </defs>
+      <rect x="30" y="550" width="55" height="210" rx="8" fill="url(#mb1)"/>
+      <rect x="105" y="490" width="55" height="270" rx="8" fill="url(#mb1)"/>
+      <rect x="180" y="430" width="55" height="330" rx="8" fill="url(#mb1)"/>
+      <rect x="255" y="380" width="55" height="380" rx="8" fill="url(#mb1)"/>
+      <rect x="330" y="350" width="55" height="410" rx="8" fill="url(#mb1)"/>
+      <rect x="405" y="300" width="55" height="460" rx="8" fill="url(#mb1)"/>
+      <rect x="480" y="250" width="55" height="510" rx="8" fill="url(#mb1)"/>
+      <rect x="555" y="200" width="55" height="560" rx="8" fill="url(#mb1)"/>
+      <rect x="630" y="150" width="55" height="610" rx="8" fill="url(#mb1)"/>
+      <rect x="705" y="100" width="55" height="660" rx="8" fill="url(#mb1)"/>
+      <rect x="780" y="50" width="55" height="710" rx="8" fill="url(#mb1)"/>
+      <polyline points="57,550 132,490 207,430 282,380 357,350 432,300 507,250 582,200 657,150 732,100 807,50"
+        stroke="#4da3ff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <circle cx="807" cy="50" r="14" fill="#1877F2" opacity="0.5"/>
+      <circle cx="807" cy="50" r="30" fill="#1877F2" opacity="0.12"/>
+    </svg>
+
+    <!-- Google Ads area chart - lower right, large and blurred -->
+    <svg class="-right-[8%] top-[20%] w-[75%] h-[100%] opacity-[0.18]" viewBox="0 0 900 800" preserveAspectRatio="xMidYMid slice" style="filter: blur(55px);">
+      <defs>
+        <linearGradient id="ga1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#4285F4" stop-opacity="0.7"/>
+          <stop offset="100%" stop-color="#34A853" stop-opacity="0.05"/>
+        </linearGradient>
+      </defs>
+      <path d="M0,550 C70,500 140,450 230,390 C320,330 400,280 500,220 C600,160 680,110 770,70 C830,45 880,30 900,20 L900,800 L0,800 Z" fill="url(#ga1)"/>
+      <path d="M0,550 C70,500 140,450 230,390 C320,330 400,280 500,220 C600,160 680,110 770,70 C830,45 880,30 900,20"
+        stroke="#5B9EF5" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <circle cx="230" cy="390" r="12" fill="#34A853" opacity="0.5"/>
+      <circle cx="500" cy="220" r="12" fill="#34A853" opacity="0.5"/>
+      <circle cx="770" cy="70" r="12" fill="#34A853" opacity="0.5"/>
+      <circle cx="900" cy="20" r="16" fill="#4285F4" opacity="0.4"/>
+      <circle cx="900" cy="20" r="35" fill="#4285F4" opacity="0.1"/>
+    </svg>
+
+    <!-- Additional: subtle line chart in the middle -->
+    <svg class="left-[10%] top-[40%] w-[80%] h-[70%] opacity-[0.08]" viewBox="0 0 800 400" preserveAspectRatio="xMidYMid slice" style="filter: blur(40px);">
+      <defs>
+        <linearGradient id="acc1" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#22C55E" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="#06B6D4" stop-opacity="0.3"/>
+        </linearGradient>
+      </defs>
+      <path d="M0,350 C80,300 160,280 250,230 C340,180 420,150 500,100 C580,50 660,30 800,10" stroke="url(#acc1)" stroke-width="6" stroke-linecap="round" fill="none"/>
+    </svg>
+  </div>
+
+  <!-- Color gradient overlay that shifts on scroll -->
   <div id="gradient-overlay" aria-hidden="true"></div>
 
   <!-- Navigation -->
@@ -213,55 +283,6 @@
 
   <!-- Hero Section -->
   <section id="hero" class="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
-    <!-- Blurred background charts covering the whole hero -->
-    <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-      <!-- Meta Ads bar chart - fills upper-left area -->
-      <svg class="absolute -left-[5%] -top-[5%] w-[65%] h-[90%] opacity-20" viewBox="0 0 800 700" preserveAspectRatio="xMidYMid slice" style="filter: blur(50px);">
-        <defs>
-          <linearGradient id="metaBar" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#1877F2" stop-opacity="0.9"/>
-            <stop offset="100%" stop-color="#1877F2" stop-opacity="0.1"/>
-          </linearGradient>
-        </defs>
-        <rect x="40" y="450" width="50" height="200" rx="8" fill="url(#metaBar)"/>
-        <rect x="110" y="400" width="50" height="250" rx="8" fill="url(#metaBar)"/>
-        <rect x="180" y="350" width="50" height="300" rx="8" fill="url(#metaBar)"/>
-        <rect x="250" y="300" width="50" height="350" rx="8" fill="url(#metaBar)"/>
-        <rect x="320" y="280" width="50" height="370" rx="8" fill="url(#metaBar)"/>
-        <rect x="390" y="240" width="50" height="410" rx="8" fill="url(#metaBar)"/>
-        <rect x="460" y="200" width="50" height="450" rx="8" fill="url(#metaBar)"/>
-        <rect x="530" y="160" width="50" height="490" rx="8" fill="url(#metaBar)"/>
-        <rect x="600" y="120" width="50" height="530" rx="8" fill="url(#metaBar)"/>
-        <rect x="670" y="80" width="50" height="570" rx="8" fill="url(#metaBar)"/>
-        <polyline points="65,450 135,400 205,350 275,300 345,280 415,240 485,200 555,160 625,120 695,80"
-          stroke="#5B9EF5" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <circle cx="695" cy="80" r="12" fill="#1877F2" opacity="0.6"/>
-        <circle cx="695" cy="80" r="25" fill="#1877F2" opacity="0.15"/>
-      </svg>
-
-      <!-- Google Ads area chart - fills upper-right area -->
-      <svg class="absolute -right-[5%] -top-[10%] w-[65%] h-[90%] opacity-20" viewBox="0 0 800 700" preserveAspectRatio="xMidYMid slice" style="filter: blur(50px);">
-        <defs>
-          <linearGradient id="googleArea" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#4285F4" stop-opacity="0.7"/>
-            <stop offset="100%" stop-color="#34A853" stop-opacity="0.05"/>
-          </linearGradient>
-        </defs>
-        <path d="M0,500 C60,460 120,420 200,370 C280,320 340,280 420,230 C500,180 560,140 640,100 C720,60 780,40 800,30 L800,700 L0,700 Z" fill="url(#googleArea)"/>
-        <path d="M0,500 C60,460 120,420 200,370 C280,320 340,280 420,230 C500,180 560,140 640,100 C720,60 780,40 800,30"
-          stroke="#5B9EF5" stroke-width="5" stroke-linecap="round" fill="none"/>
-        <circle cx="200" cy="370" r="10" fill="#34A853" opacity="0.5"/>
-        <circle cx="420" cy="230" r="10" fill="#34A853" opacity="0.5"/>
-        <circle cx="640" cy="100" r="10" fill="#34A853" opacity="0.5"/>
-        <circle cx="800" cy="30" r="14" fill="#4285F4" opacity="0.5"/>
-        <circle cx="800" cy="30" r="28" fill="#4285F4" opacity="0.12"/>
-      </svg>
-
-      <!-- Large color glow orbs -->
-      <div class="absolute top-[10%] left-[15%] w-[500px] h-[500px] rounded-full" style="background: radial-gradient(circle, rgba(24,119,242,0.08) 0%, transparent 70%);"></div>
-      <div class="absolute top-[20%] right-[10%] w-[600px] h-[600px] rounded-full" style="background: radial-gradient(circle, rgba(66,133,244,0.06) 0%, transparent 70%);"></div>
-      <div class="absolute bottom-[10%] left-[40%] w-[400px] h-[400px] rounded-full" style="background: radial-gradient(circle, rgba(34,197,94,0.05) 0%, transparent 70%);"></div>
-    </div>
 
     <!-- Center content -->
     <div class="relative max-w-4xl mx-auto px-4 sm:px-6 text-center">
@@ -472,21 +493,21 @@
         </div>
         <div class="bg-dark-700/50 border border-white/5 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h3 class="text-white font-semibold text-lg">Ведение до $1,000/мес</h3>
+            <h3 class="text-white font-semibold text-lg">Бюджет до $1,000/мес</h3>
             <p class="text-gray-400 text-sm mt-1">Полное ведение кампаний, оптимизация, отчётность</p>
           </div>
           <span class="text-white font-bold text-2xl whitespace-nowrap">от $75<span class="text-sm font-normal text-gray-500">/нед</span></span>
         </div>
         <div class="bg-dark-700/50 border border-white/5 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h3 class="text-white font-semibold text-lg">Ведение $1,000 - $3,000/мес</h3>
+            <h3 class="text-white font-semibold text-lg">Бюджет $1,000 - $3,000/мес</h3>
             <p class="text-gray-400 text-sm mt-1">Масштабирование, A/B тесты, расширенная аналитика</p>
           </div>
           <span class="text-white font-bold text-2xl whitespace-nowrap">от $100<span class="text-sm font-normal text-gray-500">/нед</span></span>
         </div>
         <div class="bg-dark-700/50 border border-white/5 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h3 class="text-white font-semibold text-lg">Ведение от $3,000/мес</h3>
+            <h3 class="text-white font-semibold text-lg">Бюджет от $3,000/мес</h3>
             <p class="text-gray-400 text-sm mt-1">Индивидуальный подход, мультиспециалист, приоритет</p>
           </div>
           <span class="text-gray-300 font-bold text-2xl whitespace-nowrap">Договорная</span>
@@ -1019,27 +1040,28 @@
         nav.classList.add('bg-dark-900/80');
       }
 
-      // Full-page colorful gradient based on scroll position
+      // Full-page colorful gradient that shifts on scroll
       if (!gradientOverlay) return;
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       const t = maxScroll > 0 ? window.scrollY / maxScroll : 0; // 0..1
 
-      // Color journey: deep indigo → teal → emerald → deep blue-violet
-      // Using HSL for smooth interpolation
-      const h1 = 230 - t * 80;  // 230 → 150 (indigo → teal)
-      const h2 = 200 - t * 60;  // 200 → 140 (blue → emerald)
-      const h3 = 260 - t * 100; // 260 → 160 (violet → green-blue)
-      const s1 = 40 + t * 15;   // saturation increases slightly
-      const s2 = 35 + t * 20;
-      const s3 = 30 + t * 15;
-      const l1 = 6 + t * 3;     // lightness stays very dark but shifts
-      const l2 = 5 + t * 4;
-      const l3 = 4 + t * 3;
+      // Color journey: deep indigo-blue → rich teal → emerald green → deep sapphire
+      // Keeping it dark (premium) but with visible, beautiful color
+      const h1 = 228 - t * 78;   // 228 → 150 (indigo → teal)
+      const h2 = 210 - t * 70;   // 210 → 140 (blue → emerald)
+      const h3 = 250 - t * 100;  // 250 → 150 (violet → teal)
+      const s1 = 55 + t * 15;    // rich saturation
+      const s2 = 50 + t * 20;
+      const s3 = 45 + t * 15;
+      const l1 = 9 + t * 4;      // dark enough to be premium, light enough to see color
+      const l2 = 7 + t * 5;
+      const l3 = 6 + t * 4;
+      const a = 0.92;
 
-      gradientOverlay.style.background = `linear-gradient(175deg,
-        hsl(${h1}, ${s1}%, ${l1}%) 0%,
-        hsl(${h2}, ${s2}%, ${l2}%) 45%,
-        hsl(${h3}, ${s3}%, ${l3}%) 100%)`;
+      gradientOverlay.style.background = `linear-gradient(170deg,
+        hsla(${h1}, ${s1}%, ${l1}%, ${a}) 0%,
+        hsla(${h2}, ${s2}%, ${l2}%, ${a}) 45%,
+        hsla(${h3}, ${s3}%, ${l3}%, ${a}) 100%)`;
     }
 
     window.addEventListener('scroll', updateGradient, { passive: true });
