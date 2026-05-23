@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: trafficpro
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: KEYCRM_API_KEY
+        sync: false
+      - key: KEYCRM_SOURCE_ID
+        sync: false
+      - key: NODE_ENV
+        value: production

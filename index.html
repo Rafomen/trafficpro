@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Performance-маркетолог — Google Ads & Meta Ads</title>
+  <meta name="description" content="Лью трафик, который приносит деньги. Google Ads + Meta Ads. Товарка, гембла, крипта, SaaS, найм, инвестиции. Без оплаты до первых результатов.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            dark: { 900: '#0B0F1A', 800: '#111827', 700: '#1E293B', 600: '#334155' },
+            accent: { DEFAULT: '#22C55E', hover: '#16A34A', light: '#4ADE80' },
+            cyan: { DEFAULT: '#06B6D4', light: '#22D3EE' }
+          },
+          animation: {
+            'fade-up': 'fadeUp 0.6s ease-out forwards',
+            'pulse-slow': 'pulse 3s ease-in-out infinite',
+          },
+          keyframes: {
+            fadeUp: {
+              '0%': { opacity: '0', transform: 'translateY(30px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    [x-cloak] { display: none !important; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Staggered children: add delay via data attribute */
+    .reveal-stagger { transition-delay: var(--stagger, 0ms); }
+
+    /* Scale-in variant */
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.92) translateY(20px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-scale.visible {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    /* Slide-up with blur */
+    .reveal-blur {
+      opacity: 0;
+      transform: translateY(50px);
+      filter: blur(8px);
+      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                  filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-blur.visible {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0px);
+    }
+
+    /* Slide from left */
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Slide from right */
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .reveal-scale, .reveal-blur, .reveal-left, .reveal-right, .reveal-stagger {
+        transition: none;
+        opacity: 1;
+        transform: none;
+        filter: none;
+      }
+      * { animation-duration: 0.01ms !important; }
+    }
+
+    ::selection { background: #22C55E40; color: #fff; }
+
+    /* Scroll-responsive gradient overlay */
+    #gradient-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      background: linear-gradient(170deg,
+        hsl(230, 40%, 6%) 0%,
+        hsl(230, 40%, 6%) 100%);
+    }
+
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0B0F1A; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #22C55E 0%, #06B6D4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .glow-border {
+      position: relative;
+    }
+    .glow-border::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg, #22C55E40, #06B6D440);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px -12px rgba(34, 197, 94, 0.15);
+    }
+
+    .form-input {
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .form-input:focus {
+      border-color: #22C55E;
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
+    }
+
+    .niche-card.active {
+      border-color: #22C55E;
+      background: rgba(34, 197, 94, 0.05);
+    }
+  </style>
+</head>
+<body class="bg-dark-900 text-gray-200 font-sans antialiased" id="page-body">
+  <div id="gradient-overlay" aria-hidden="true"></div>
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-dark-900/80 backdrop-blur-lg border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-16">
+        <a href="#" class="text-lg font-bold text-white">Traffic<span class="text-accent">Pro</span></a>
+        <div class="hidden md:flex items-center gap-8 text-sm">
+          <a href="#value" class="text-gray-400 hover:text-white transition-colors cursor-pointer">Ценность</a>
+          <a href="#niches" class="text-gray-400 hover:text-white transition-colors cursor-pointer">Направления</a>
+          <a href="#process" class="text-gray-400 hover:text-white transition-colors cursor-pointer">Процесс</a>
+          <a href="#pricing" class="text-gray-400 hover:text-white transition-colors cursor-pointer">Цены</a>
+          <a href="#cases" class="text-gray-400 hover:text-white transition-colors cursor-pointer">Кейсы</a>
+          <a href="#faq" class="text-gray-400 hover:text-white transition-colors cursor-pointer">FAQ</a>
+          <a href="#contact" class="bg-accent hover:bg-accent-hover text-dark-900 font-semibold px-5 py-2 rounded-lg transition-colors cursor-pointer">Обсудить проект</a>
+        </div>
+        <button id="mobile-menu-btn" class="md:hidden text-gray-400 hover:text-white cursor-pointer" aria-label="Открыть меню">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-white/5 bg-dark-900/95 backdrop-blur-lg">
+      <div class="px-4 py-4 space-y-3 text-sm">
+        <a href="#value" class="block text-gray-400 hover:text-white transition-colors cursor-pointer">Ценность</a>
+        <a href="#niches" class="block text-gray-400 hover:text-white transition-colors cursor-pointer">Направления</a>
+        <a href="#process" class="block text-gray-400 hover:text-white transition-colors cursor-pointer">Процесс</a>
+        <a href="#pricing" class="block text-gray-400 hover:text-white transition-colors cursor-pointer">Цены</a>
+        <a href="#cases" class="block text-gray-400 hover:text-white transition-colors cursor-pointer">Кейсы</a>
+        <a href="#faq" class="block text-gray-400 hover:text-white transition-colors cursor-pointer">FAQ</a>
+        <a href="#contact" class="block bg-accent hover:bg-accent-hover text-dark-900 font-semibold px-5 py-2 rounded-lg text-center transition-colors cursor-pointer">Обсудить проект</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="hero" class="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
+    <!-- Blurred background charts covering the whole hero -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+      <!-- Meta Ads bar chart - fills upper-left area -->
+      <svg class="absolute -left-[5%] -top-[5%] w-[65%] h-[90%] opacity-20" viewBox="0 0 800 700" preserveAspectRatio="xMidYMid slice" style="filter: blur(50px);">
+        <defs>
+          <linearGradient id="metaBar" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1877F2" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="#1877F2" stop-opacity="0.1"/>
+          </linearGradient>
+        </defs>
+        <rect x="40" y="450" width="50" height="200" rx="8" fill="url(#metaBar)"/>
+        <rect x="110" y="400" width="50" height="250" rx="8" fill="url(#metaBar)"/>
+        <rect x="180" y="350" width="50" height="300" rx="8" fill="url(#metaBar)"/>
+        <rect x="250" y="300" width="50" height="350" rx="8" fill="url(#metaBar)"/>
+        <rect x="320" y="280" width="50" height="370" rx="8" fill="url(#metaBar)"/>
+        <rect x="390" y="240" width="50" height="410" rx="8" fill="url(#metaBar)"/>
+        <rect x="460" y="200" width="50" height="450" rx="8" fill="url(#metaBar)"/>
+        <rect x="530" y="160" width="50" height="490" rx="8" fill="url(#metaBar)"/>
+        <rect x="600" y="120" width="50" height="530" rx="8" fill="url(#metaBar)"/>
+        <rect x="670" y="80" width="50" height="570" rx="8" fill="url(#metaBar)"/>
+        <polyline points="65,450 135,400 205,350 275,300 345,280 415,240 485,200 555,160 625,120 695,80"
+          stroke="#5B9EF5" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <circle cx="695" cy="80" r="12" fill="#1877F2" opacity="0.6"/>
+        <circle cx="695" cy="80" r="25" fill="#1877F2" opacity="0.15"/>
+      </svg>
+
+      <!-- Google Ads area chart - fills upper-right area -->
+      <svg class="absolute -right-[5%] -top-[10%] w-[65%] h-[90%] opacity-20" viewBox="0 0 800 700" preserveAspectRatio="xMidYMid slice" style="filter: blur(50px);">
+        <defs>
+          <linearGradient id="googleArea" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#4285F4" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#34A853" stop-opacity="0.05"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,500 C60,460 120,420 200,370 C280,320 340,280 420,230 C500,180 560,140 640,100 C720,60 780,40 800,30 L800,700 L0,700 Z" fill="url(#googleArea)"/>
+        <path d="M0,500 C60,460 120,420 200,370 C280,320 340,280 420,230 C500,180 560,140 640,100 C720,60 780,40 800,30"
+          stroke="#5B9EF5" stroke-width="5" stroke-linecap="round" fill="none"/>
+        <circle cx="200" cy="370" r="10" fill="#34A853" opacity="0.5"/>
+        <circle cx="420" cy="230" r="10" fill="#34A853" opacity="0.5"/>
+        <circle cx="640" cy="100" r="10" fill="#34A853" opacity="0.5"/>
+        <circle cx="800" cy="30" r="14" fill="#4285F4" opacity="0.5"/>
+        <circle cx="800" cy="30" r="28" fill="#4285F4" opacity="0.12"/>
+      </svg>
+
+      <!-- Large color glow orbs -->
+      <div class="absolute top-[10%] left-[15%] w-[500px] h-[500px] rounded-full" style="background: radial-gradient(circle, rgba(24,119,242,0.08) 0%, transparent 70%);"></div>
+      <div class="absolute top-[20%] right-[10%] w-[600px] h-[600px] rounded-full" style="background: radial-gradient(circle, rgba(66,133,244,0.06) 0%, transparent 70%);"></div>
+      <div class="absolute bottom-[10%] left-[40%] w-[400px] h-[400px] rounded-full" style="background: radial-gradient(circle, rgba(34,197,94,0.05) 0%, transparent 70%);"></div>
+    </div>
+
+    <!-- Center content -->
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 text-sm text-gray-400 mb-8">
+        <span class="w-2 h-2 bg-accent rounded-full animate-pulse-slow"></span>
+        Открыт к новым проектам
+      </div>
+      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight tracking-tight mb-6">
+        Лью трафик,<br>который <span class="gradient-text">приносит деньги</span>
+      </h1>
+      <p class="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-4">
+        Google Ads + Meta Ads. Товарка, гембла, крипта, SaaS, найм, инвестиции.
+      </p>
+      <p class="text-base text-accent font-semibold mb-10">
+        Без оплаты до первых результатов
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#contact" class="bg-accent hover:bg-accent-hover text-dark-900 font-semibold px-8 py-4 rounded-xl text-lg transition-colors cursor-pointer">
+          Обсудить проект
+        </a>
+        <a href="#cases" class="border border-white/10 hover:border-white/20 text-white font-medium px-8 py-4 rounded-xl text-lg transition-colors cursor-pointer">
+          Смотреть кейсы
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Value Section -->
+  <section id="value" class="py-24 sm:py-32">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-16 reveal-blur">
+        <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">В чём ценность</h2>
+        <p class="text-gray-400 max-w-xl mx-auto">Почему со мной работают и возвращаются</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Card 1 -->
+        <div class="reveal-scale bg-dark-700/50 border border-white/5 rounded-2xl p-6 card-hover cursor-default">
+          <div class="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <h3 class="text-white font-semibold text-lg mb-2">$0 до результата</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Платишь только за расходники и рекламный бюджет. Моя работа — бесплатно до первых результатов.</p>
+        </div>
+        <!-- Card 2 -->
+        <div class="reveal-scale bg-dark-700/50 border border-white/5 rounded-2xl p-6 card-hover cursor-default">
+          <div class="w-12 h-12 bg-cyan/10 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+          </div>
+          <h3 class="text-white font-semibold text-lg mb-2">От $75/нед после</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Когда увидишь результат и убедишься в эффективности — прозрачная цена без сюрпризов.</p>
+        </div>
+        <!-- Card 3 -->
+        <div class="reveal-scale bg-dark-700/50 border border-white/5 rounded-2xl p-6 card-hover cursor-default">
+          <div class="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <h3 class="text-white font-semibold text-lg mb-2">Жёсткие ниши</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Опыт в гембле, крипте, товарке — где нужны аккуанты, креативный подход и обход ограничений.</p>
+        </div>
+        <!-- Card 4 -->
+        <div class="reveal-scale bg-dark-700/50 border border-white/5 rounded-2xl p-6 card-hover cursor-default">
+          <div class="w-12 h-12 bg-amber-500/10 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+          </div>
+          <h3 class="text-white font-semibold text-lg mb-2">Прозрачность</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Полный доступ к кабинетам, скриншоты, еженедельные отчёты и метрики.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Niches Section -->
+  <section id="niches" class="py-24 sm:py-32 bg-dark-800/50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-16 reveal">
+        <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">Направления</h2>
+        <p class="text-gray-400 max-w-xl mx-auto">Ниши, в которых у меня реальный опыт и результаты</p>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <!-- Niche items -->
+        <div class="reveal-scale bg-dark-700/50 border border-white/5 rounded-xl p-5 text-center card-hover cursor-default">
+          <div class="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center mx-auto mb-3">
+            <svg class="w-5 h-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+          </div>
+          <span class="text-white font-medium text-sm">Товарка</span>
+        </div>
+        <div class="reveal-scale bg-dark-700/50 border border-white/5 rounded-xl p-5 text-center card-hover cursor-default">
+          <div class="w-10 h-10 bg-purple-500/10 rounded-lg flex items-center justify-center mx-auto mb-3">
+            <svg class="w-5 h-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+          </div>
+          <span class="text-white font-medium text-sm">Гембла</span>
+        </div>
+        <div class="reveal-scale bg-dark-700/50 border border-white/5 rounded-xl p-5 text-center card-hover cursor-default">
+          <div class="w-10 h-10 bg-cyan/10 rounded-lg flex items-center justify-center mx-auto mb-3">
+            <svg class="w-5 h-5 text-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/></svg>
+          </div>
+          <span class="text-white font-medium text-sm">SaaS</span>
+        </div>
+        <div class="reveal-scale bg-dark-700/50 border border-white/5 rounded-xl p-5 text-center card-hover cursor-default">
+          <div class="w-10 h-10 bg-amber-500/10 rounded-lg flex items-center justify-center mx-auto mb-3">
+            <svg class="w-5 h-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <span class="text-white font-medium text-sm">Крипта</span>
+        </div>
+        <div class="reveal-scale bg-dark-700/50 border border-white/5 rounded-xl p-5 text-center card-hover cursor-default">
+          <div class="w-10 h-10 bg-emerald-500/10 rounded-lg flex items-center justify-center mx-auto mb-3">
+            <svg class="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <span class="text-white font-medium text-sm">Инвестиции</span>
+        </div>
+        <div class="reveal-scale bg-dark-700/50 border border-white/5 rounded-xl p-5 text-center card-hover cursor-default">
+          <div class="w-10 h-10 bg-blue-500/10 rounded-lg flex items-center justify-center mx-auto mb-3">
+            <svg class="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <span class="text-white font-medium text-sm">Найм</span>
+        </div>
+        <div class="reveal-scale bg-dark-700/50 border border-white/5 rounded-xl p-5 text-center card-hover cursor-default">
+          <div class="w-10 h-10 bg-rose-500/10 rounded-lg flex items-center justify-center mx-auto mb-3">
+            <svg class="w-5 h-5 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          </div>
+          <span class="text-white font-medium text-sm">Retention</span>
+        </div>
+        <div class="reveal-scale bg-dark-700/50 border border-white/5 rounded-xl p-5 text-center card-hover cursor-default">
+          <div class="w-10 h-10 bg-pink-500/10 rounded-lg flex items-center justify-center mx-auto mb-3">
+            <svg class="w-5 h-5 text-pink-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+          </div>
+          <span class="text-white font-medium text-sm">Нутра</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Section -->
+  <section id="process" class="py-24 sm:py-32">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-16 reveal">
+        <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">Как работаю</h2>
+        <p class="text-gray-400 max-w-xl mx-auto">От брифа до стабильных результатов — 6 этапов</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Step 1 -->
+        <div class="reveal-blur relative bg-dark-700/50 border border-white/5 rounded-2xl p-6 card-hover cursor-default">
+          <span class="text-accent/20 text-6xl font-black absolute top-4 right-6 leading-none">01</span>
+          <div class="relative">
+            <h3 class="text-white font-semibold text-lg mb-2">Бриф</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">Обсуждаем нишу, оффер, гео, бюджет. Понимаю задачу и цели.</p>
+          </div>
+        </div>
+        <!-- Step 2 -->
+        <div class="reveal-blur relative bg-dark-700/50 border border-white/5 rounded-2xl p-6 card-hover cursor-default">
+          <span class="text-accent/20 text-6xl font-black absolute top-4 right-6 leading-none">02</span>
+          <div class="relative">
+            <h3 class="text-white font-semibold text-lg mb-2">Стратегия</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">Подбираю связки, площадки, форматы. План кампаний.</p>
+          </div>
+        </div>
+        <!-- Step 3 -->
+        <div class="reveal-blur relative bg-dark-700/50 border border-white/5 rounded-2xl p-6 card-hover cursor-default">
+          <span class="text-accent/20 text-6xl font-black absolute top-4 right-6 leading-none">03</span>
+          <div class="relative">
+            <h3 class="text-white font-semibold text-lg mb-2">Подготовка</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">Аккуанты, креативы, лендинги/прелендинги. Всё под ключ.</p>
+          </div>
+        </div>
+        <!-- Step 4 -->
+        <div class="reveal-blur relative bg-dark-700/50 border border-white/5 rounded-2xl p-6 card-hover cursor-default">
+          <span class="text-accent/20 text-6xl font-black absolute top-4 right-6 leading-none">04</span>
+          <div class="relative">
+            <h3 class="text-white font-semibold text-lg mb-2">Запуск</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">Тестовые кампании, сбор данных, первичная аналитика.</p>
+          </div>
+        </div>
+        <!-- Step 5 -->
+        <div class="reveal-blur relative bg-dark-700/50 border border-white/5 rounded-2xl p-6 card-hover cursor-default">
+          <span class="text-accent/20 text-6xl font-black absolute top-4 right-6 leading-none">05</span>
+          <div class="relative">
+            <h3 class="text-white font-semibold text-lg mb-2">Оптимизация</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">Отключаю нерабочее, масштабирую рабочее. Рост ROI.</p>
+          </div>
+        </div>
+        <!-- Step 6 -->
+        <div class="reveal-blur relative bg-dark-700/50 border border-white/5 rounded-2xl p-6 card-hover cursor-default">
+          <span class="text-accent/20 text-6xl font-black absolute top-4 right-6 leading-none">06</span>
+          <div class="relative">
+            <h3 class="text-white font-semibold text-lg mb-2">Отчётность</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">Скриншоты, метрики, рекомендации. Полная прозрачность.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section id="pricing" class="py-24 sm:py-32 bg-dark-800/50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-16 reveal">
+        <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">Цены</h2>
+        <p class="text-gray-400 max-w-xl mx-auto">Честно и прозрачно. Никаких скрытых платежей.</p>
+      </div>
+      <div class="space-y-4 reveal-blur">
+        <!-- Price rows -->
+        <div class="glow-border bg-dark-700/50 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h3 class="text-white font-semibold text-lg">Запуск + первые результаты</h3>
+            <p class="text-gray-400 text-sm mt-1">Только расходники и бюджет на рекламу</p>
+          </div>
+          <span class="text-accent font-bold text-2xl whitespace-nowrap">$0 <span class="text-sm font-normal text-gray-500">за работу</span></span>
+        </div>
+        <div class="bg-dark-700/50 border border-white/5 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h3 class="text-white font-semibold text-lg">Ведение до $1,000/мес</h3>
+            <p class="text-gray-400 text-sm mt-1">Полное ведение кампаний, оптимизация, отчётность</p>
+          </div>
+          <span class="text-white font-bold text-2xl whitespace-nowrap">от $75<span class="text-sm font-normal text-gray-500">/нед</span></span>
+        </div>
+        <div class="bg-dark-700/50 border border-white/5 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h3 class="text-white font-semibold text-lg">Ведение $1,000 - $3,000/мес</h3>
+            <p class="text-gray-400 text-sm mt-1">Масштабирование, A/B тесты, расширенная аналитика</p>
+          </div>
+          <span class="text-white font-bold text-2xl whitespace-nowrap">от $100<span class="text-sm font-normal text-gray-500">/нед</span></span>
+        </div>
+        <div class="bg-dark-700/50 border border-white/5 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h3 class="text-white font-semibold text-lg">Ведение от $3,000/мес</h3>
+            <p class="text-gray-400 text-sm mt-1">Индивидуальный подход, мультиспециалист, приоритет</p>
+          </div>
+          <span class="text-gray-300 font-bold text-2xl whitespace-nowrap">Договорная</span>
+        </div>
+      </div>
+      <p class="text-center text-gray-500 text-sm mt-8 reveal">Платишь только когда видишь результат</p>
+    </div>
+  </section>
+
+  <!-- Cases Section -->
+  <section id="cases" class="py-24 sm:py-32">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12 reveal">
+        <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">Кейсы</h2>
+        <p class="text-gray-400 max-w-xl mx-auto">Реальные результаты в разных нишах</p>
+      </div>
+
+      <!-- Niche Filter -->
+      <div class="flex flex-wrap justify-center gap-2 mb-12 reveal" id="case-filters">
+        <button data-filter="all" class="filter-btn active bg-accent/10 text-accent border border-accent/20 px-4 py-1.5 rounded-full text-sm font-medium transition-colors cursor-pointer">Все</button>
+        <button data-filter="ecom" class="filter-btn text-gray-400 border border-white/10 px-4 py-1.5 rounded-full text-sm font-medium hover:text-white transition-colors cursor-pointer">Товарка</button>
+        <button data-filter="gambling" class="filter-btn text-gray-400 border border-white/10 px-4 py-1.5 rounded-full text-sm font-medium hover:text-white transition-colors cursor-pointer">Гембла</button>
+        <button data-filter="saas" class="filter-btn text-gray-400 border border-white/10 px-4 py-1.5 rounded-full text-sm font-medium hover:text-white transition-colors cursor-pointer">SaaS</button>
+        <button data-filter="hr" class="filter-btn text-gray-400 border border-white/10 px-4 py-1.5 rounded-full text-sm font-medium hover:text-white transition-colors cursor-pointer">Найм</button>
+        <button data-filter="retention" class="filter-btn text-gray-400 border border-white/10 px-4 py-1.5 rounded-full text-sm font-medium hover:text-white transition-colors cursor-pointer">Retention</button>
+        <button data-filter="invest" class="filter-btn text-gray-400 border border-white/10 px-4 py-1.5 rounded-full text-sm font-medium hover:text-white transition-colors cursor-pointer">Инвестиции</button>
+        <button data-filter="nutra" class="filter-btn text-gray-400 border border-white/10 px-4 py-1.5 rounded-full text-sm font-medium hover:text-white transition-colors cursor-pointer">Нутра</button>
+        <button data-filter="crypto" class="filter-btn text-gray-400 border border-white/10 px-4 py-1.5 rounded-full text-sm font-medium hover:text-white transition-colors cursor-pointer">Крипта</button>
+      </div>
+
+      <!-- Case Cards -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="cases-grid">
+
+        <!-- Case 1: Товарка -->
+        <div class="case-card reveal-scale bg-dark-700/50 border border-white/5 rounded-2xl overflow-hidden card-hover cursor-default" data-category="ecom">
+          <div class="bg-accent/5 p-4 border-b border-white/5">
+            <div class="flex items-center justify-between">
+              <span class="text-accent text-xs font-semibold uppercase tracking-wider">Товарка</span>
+              <span class="text-gray-500 text-xs">Украина</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-white font-semibold mb-1">Интернет-магазин гаджетов</h3>
+            <p class="text-gray-500 text-sm mb-4">Facebook / Instagram Ads</p>
+            <div class="space-y-2">
+              <div class="flex justify-between text-sm"><span class="text-gray-400">ROI</span><span class="text-accent font-bold">340%</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-400">CPA</span><span class="text-white">$4.20</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-400">Заказов</span><span class="text-white">286/мес</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-400">CTR</span><span class="text-white">2.8%</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Case 2: Гембла -->
+        <div class="case-card reveal-scale bg-dark-700/50 border border-white/5 rounded-2xl overflow-hidden card-hover cursor-default" data-category="gambling">
+          <div class="bg-purple-500/5 p-4 border-b border-white/5">
+            <div class="flex items-center justify-between">
+              <span class="text-purple-400 text-xs font-semibold uppercase tracking-wider">Гембла</span>
+              <span class="text-gray-500 text-xs">UA, KZ</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-white font-semibold mb-1">Казино-оффер</h3>
+            <p class="text-gray-500 text-sm mb-4">Facebook + Telegram-воронка</p>
+            <div class="space-y-2">
+              <div class="flex justify-between text-sm"><span class="text-gray-400">ROI</span><span class="text-purple-400 font-bold">520%</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-400">FD</span><span class="text-white">187/мес</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-400">Стоимость FD</span><span class="text-white">$13.40</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-400">Конверсия</span><span class="text-white">1.9%</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Case 3: SaaS -->
+        <div class="case-card reveal-scale bg-dark-700/50 border border-white/5 rounded-2xl overflow-hidden card-hover cursor-default" data-category="saas">
+          <div class="bg-cyan/5 p-4 border-b border-white/5">
+            <div class="flex items-center justify-between">
+              <span class="text-cyan text-xs font-semibold uppercase tracking-wider">SaaS</span>
+              <span class="text-gray-500 text-xs">UA, PL, DE</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-white font-semibold mb-1">VPN-сервис</h3>
+            <p class="text-gray-500 text-sm mb-4">Google Ads + Facebook Ads</p>
+            <div class="space-y-2">
+              <div class="flex justify-between text-sm"><span class="text-gray-400">ROI</span><span class="text-cyan font-bold">285%</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-400">Trial</span><span class="text-white">412</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-400">Платящих</span><span class="text-white">95 (23%)</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-400">LTV 3 мес</span><span class="text-white">$54</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Case 4: Найм -->
+        <div class="case-card reveal-scale bg-dark-700/50 border border-white/5 rounded-2xl overflow-hidden card-hover cursor-default" data-category="hr">
+          <div class="bg-blue-500/5 p-4 border-b border-white/5">
+            <div class="flex items-center justify-between">
+              <span class="text-blue-400 text-xs font-semibold uppercase tracking-wider">Найм</span>
+              <span class="text-gray-500 text-xs">Украина</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-white font-semibold mb-1">Логистическая компания</h3>
+            <p class="text-gray-500 text-sm mb-4">Facebook Lead Ads</p>
+            <div class="space-y-2">
+              <div class="flex justify-between text-sm"><span class="text-gray-400">Лидов</span><span class="text-white">340</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-400">Нанято</span><span class="text-white">38</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-400">Стоимость лида</span><span class="text-blue-400 font-bold">$1.76</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-400">Стоимость найма</span><span class="text-white">$15.80</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Case 5: Retention -->
+        <div class="case-card reveal-scale bg-dark-700/50 border border-white/5 rounded-2xl overflow-hidden card-hover cursor-default" data-category="retention">
+          <div class="bg-rose-500/5 p-4 border-b border-white/5">
+            <div class="flex items-center justify-between">
+              <span class="text-rose-400 text-xs font-semibold uppercase tracking-wider">Retention</span>
+              <span class="text-gray-500 text-xs">UA, USA</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-white font-semibold mb-1">Онлайн-сервис подписок</h3>
+            <p class="text-gray-500 text-sm mb-4">Email + Facebook Retargeting</p>
+            <div class="space-y-2">
+              <div class="flex justify-between text-sm"><span class="text-gray-400">Удержано</span><span class="text-rose-400 font-bold">62%</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-400">Chargeback</span><span class="text-white">8.2% → 3.1%</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-400">Стоимость</span><span class="text-white">$2.30/клиент</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-400">Экономия</span><span class="text-white">$4,200/мес</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Case 6: Инвестиции -->
+        <div class="case-card reveal-scale bg-dark-700/50 border border-white/5 rounded-2xl overflow-hidden card-hover cursor-default" data-category="invest">
+          <div class="bg-emerald-500/5 p-4 border-b border-white/5">
+            <div class="flex items-center justify-between">
+              <span class="text-emerald-400 text-xs font-semibold uppercase tracking-wider">Инвестиции</span>
+              <span class="text-gray-500 text-xs">Украина</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-white font-semibold mb-1">Инвестиционная платформа</h3>
+            <p class="text-gray-500 text-sm mb-4">Facebook + Instagram Ads</p>
+            <div class="space-y-2">
+              <div class="flex justify-between text-sm"><span class="text-gray-400">ROI</span><span class="text-emerald-400 font-bold">380%</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-400">Регистраций</span><span class="text-white">890</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-400">FTD</span><span class="text-white">124</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-400">Средний депозит</span><span class="text-white">$340</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Case 7: Нутра -->
+        <div class="case-card reveal-scale bg-dark-700/50 border border-white/5 rounded-2xl overflow-hidden card-hover cursor-default" data-category="nutra">
+          <div class="bg-pink-500/5 p-4 border-b border-white/5">
+            <div class="flex items-center justify-between">
+              <span class="text-pink-400 text-xs font-semibold uppercase tracking-wider">Нутра</span>
+              <span class="text-gray-500 text-xs">UA, RO</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-white font-semibold mb-1">Похудение — капсулы</h3>
+            <p class="text-gray-500 text-sm mb-4">Facebook + прелендинги</p>
+            <div class="space-y-2">
+              <div class="flex justify-between text-sm"><span class="text-gray-400">ROI</span><span class="text-pink-400 font-bold">290%</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-400">Подтверждённых</span><span class="text-white">134</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-400">CPA</span><span class="text-white">$11.20</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-400">Бюджет</span><span class="text-white">$1,500/мес</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Case 8: Крипта -->
+        <div class="case-card reveal-scale bg-dark-700/50 border border-white/5 rounded-2xl overflow-hidden card-hover cursor-default" data-category="crypto">
+          <div class="bg-amber-500/5 p-4 border-b border-white/5">
+            <div class="flex items-center justify-between">
+              <span class="text-amber-400 text-xs font-semibold uppercase tracking-wider">Крипта</span>
+              <span class="text-gray-500 text-xs">UA, TR, LATAM</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-white font-semibold mb-1">Криптобиржа</h3>
+            <p class="text-gray-500 text-sm mb-4">Facebook + Google Ads</p>
+            <div class="space-y-2">
+              <div class="flex justify-between text-sm"><span class="text-gray-400">Регистраций</span><span class="text-white">1,240</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-400">KYC</span><span class="text-white">380</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-400">FTD</span><span class="text-amber-400 font-bold">$19.05</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-400">Средний депозит</span><span class="text-white">$280</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="py-24 sm:py-32 bg-dark-800/50">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-16 reveal">
+        <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">FAQ</h2>
+        <p class="text-gray-400">Частые вопросы и ответы</p>
+      </div>
+      <div class="space-y-3 reveal-blur" id="faq-list">
+        <div class="faq-item reveal border border-white/5 rounded-xl overflow-hidden">
+          <button class="faq-toggle w-full flex items-center justify-between p-5 text-left cursor-pointer" aria-expanded="false">
+            <span class="text-white font-medium pr-4">Сколько нужно на старт?</span>
+            <svg class="w-5 h-5 text-gray-500 flex-shrink-0 transition-transform duration-200 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-content hidden px-5 pb-5">
+            <p class="text-gray-400 text-sm leading-relaxed">Бюджет на рекламу от $300 + расходники (аккаунты, прокси). Моя работа — $0 до результата.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal border border-white/5 rounded-xl overflow-hidden">
+          <button class="faq-toggle w-full flex items-center justify-between p-5 text-left cursor-pointer" aria-expanded="false">
+            <span class="text-white font-medium pr-4">Какие гео льёте?</span>
+            <svg class="w-5 h-5 text-gray-500 flex-shrink-0 transition-transform duration-200 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-content hidden px-5 pb-5">
+            <p class="text-gray-400 text-sm leading-relaxed">Украина, Польша, Казахстан, Европа, Латинская Америка — зависит от оффера и ниши.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal border border-white/5 rounded-xl overflow-hidden">
+          <button class="faq-toggle w-full flex items-center justify-between p-5 text-left cursor-pointer" aria-expanded="false">
+            <span class="text-white font-medium pr-4">Как быстро будут результаты?</span>
+            <svg class="w-5 h-5 text-gray-500 flex-shrink-0 transition-transform duration-200 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-content hidden px-5 pb-5">
+            <p class="text-gray-400 text-sm leading-relaxed">Первые конверсии обычно на 3-7 день. Стабильные результаты — через 2-3 недели.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal border border-white/5 rounded-xl overflow-hidden">
+          <button class="faq-toggle w-full flex items-center justify-between p-5 text-left cursor-pointer" aria-expanded="false">
+            <span class="text-white font-medium pr-4">Работаете с гемблой?</span>
+            <svg class="w-5 h-5 text-gray-500 flex-shrink-0 transition-transform duration-200 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-content hidden px-5 pb-5">
+            <p class="text-gray-400 text-sm leading-relaxed">Да, есть опыт обхода ограничений Facebook, настройка CAPI, воронки через Telegram.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal border border-white/5 rounded-xl overflow-hidden">
+          <button class="faq-toggle w-full flex items-center justify-between p-5 text-left cursor-pointer" aria-expanded="false">
+            <span class="text-white font-medium pr-4">Какая отчётность?</span>
+            <svg class="w-5 h-5 text-gray-500 flex-shrink-0 transition-transform duration-200 faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-content hidden px-5 pb-5">
+            <p class="text-gray-400 text-sm leading-relaxed">Еженедельные скриншоты, метрики в Google Sheets или дашборд. Полный доступ к кабинетам.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Form Section -->
+  <section id="contact" class="py-24 sm:py-32">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12 reveal">
+        <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">Обсудить проект</h2>
+        <p class="text-gray-400">Заполните форму и я свяжусь с вами в течение 24 часов</p>
+      </div>
+      <form id="contact-form" class="reveal-blur glow-border bg-dark-700/50 rounded-2xl p-6 sm:p-8 space-y-5" novalidate>
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-300 mb-1.5">Ваше имя</label>
+          <input type="text" id="name" name="name" required placeholder="Александр"
+            class="form-input w-full bg-dark-800 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 outline-none">
+        </div>
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label for="telegram" class="block text-sm font-medium text-gray-300 mb-1.5">Telegram</label>
+            <input type="text" id="telegram" name="telegram" required placeholder="@username или телефон"
+              class="form-input w-full bg-dark-800 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 outline-none">
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-300 mb-1.5">Email</label>
+            <input type="email" id="email" name="email" required placeholder="email@example.com"
+              class="form-input w-full bg-dark-800 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 outline-none">
+          </div>
+        </div>
+        <div>
+          <label for="niche" class="block text-sm font-medium text-gray-300 mb-1.5">Ваша ниша</label>
+          <select id="niche" name="niche" required
+            class="form-input w-full bg-dark-800 border border-white/10 rounded-xl px-4 py-3 text-white outline-none cursor-pointer appearance-none"
+            style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%236B7280%22 stroke-width=%222%22><path d=%22M19 9l-7 7-7-7%22/></svg>'); background-repeat: no-repeat; background-position: right 1rem center;">
+            <option value="" disabled selected class="text-gray-600">Выберите нишу</option>
+            <option value="ecom">Товарка / e-commerce</option>
+            <option value="gambling">Гембла / беттинг</option>
+            <option value="saas">SaaS / подписки</option>
+            <option value="crypto">Крипта / Web3</option>
+            <option value="invest">Инвестиции</option>
+            <option value="hr">Найм сотрудников</option>
+            <option value="retention">Chargeback / Retention</option>
+            <option value="other">Другое</option>
+          </select>
+        </div>
+        <div>
+          <label for="budget" class="block text-sm font-medium text-gray-300 mb-1.5">Какой бюджет планируете?</label>
+          <select id="budget" name="budget" required
+            class="form-input w-full bg-dark-800 border border-white/10 rounded-xl px-4 py-3 text-white outline-none cursor-pointer appearance-none"
+            style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%236B7280%22 stroke-width=%222%22><path d=%22M19 9l-7 7-7-7%22/></svg>'); background-repeat: no-repeat; background-position: right 1rem center;">
+            <option value="" disabled selected class="text-gray-600">Выберите бюджет</option>
+            <option value="under500">До $500</option>
+            <option value="500-2000">$500 - $2,000</option>
+            <option value="2000-5000">$2,000 - $5,000</option>
+            <option value="5000+">$5,000+</option>
+          </select>
+        </div>
+        <div>
+          <label for="experience" class="block text-sm font-medium text-gray-300 mb-1.5">Рекламировались раньше?</label>
+          <select id="experience" name="experience" required
+            class="form-input w-full bg-dark-800 border border-white/10 rounded-xl px-4 py-3 text-white outline-none cursor-pointer appearance-none"
+            style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%236B7280%22 stroke-width=%222%22><path d=%22M19 9l-7 7-7-7%22/></svg>'); background-repeat: no-repeat; background-position: right 1rem center;">
+            <option value="" disabled selected class="text-gray-600">Выберите вариант</option>
+            <option value="yes">Да, есть опыт</option>
+            <option value="no">Нет, с нуля</option>
+          </select>
+        </div>
+        <button type="submit" id="submit-btn"
+          class="w-full bg-accent hover:bg-accent-hover text-dark-900 font-semibold py-4 rounded-xl text-lg transition-colors cursor-pointer">
+          Обсудить проект
+        </button>
+        <p id="form-success" class="hidden text-center text-accent text-sm font-medium pt-2"></p>
+        <p id="form-error" class="hidden text-center text-rose-400 text-sm font-medium pt-2"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 border-t border-white/5 bg-dark-900">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div>
+          <a href="#" class="text-lg font-bold text-white">Traffic<span class="text-accent">Pro</span></a>
+          <p class="text-gray-500 text-sm mt-1">Performance-маркетолог</p>
+        </div>
+        <div class="flex items-center gap-6">
+          <a href="https://t.me/metagoogle_ads" target="_blank" rel="noopener noreferrer"
+            class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors cursor-pointer" aria-label="Telegram">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+            <span class="text-sm">@metagoogle_ads</span>
+          </a>
+          <a href="mailto:pinalolcolada@gmail.com"
+            class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors cursor-pointer" aria-label="Email">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            <span class="text-sm">pinalolcolada@gmail.com</span>
+          </a>
+        </div>
+      </div>
+      <div class="mt-8 pt-6 border-t border-white/5 text-center">
+        <p class="text-gray-600 text-sm">&copy; 2025 TrafficPro. Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+    // Close mobile menu on link click
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+    });
+
+    // Premium scroll reveal with stagger
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    // Observe all reveal elements and add stagger delays to grid children
+    document.querySelectorAll('.reveal, .reveal-scale, .reveal-blur, .reveal-left, .reveal-right').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    // Auto-stagger grid children
+    document.querySelectorAll('.grid').forEach(grid => {
+      const children = grid.querySelectorAll('.reveal, .reveal-scale, .reveal-blur, .reveal-left, .reveal-right');
+      children.forEach((child, i) => {
+        child.classList.add('reveal-stagger');
+        child.style.setProperty('--stagger', `${i * 80}ms`);
+      });
+    });
+
+    // Stagger FAQ items
+    document.querySelectorAll('.faq-item').forEach((item, i) => {
+      item.classList.add('reveal-stagger');
+      item.style.setProperty('--stagger', `${i * 60}ms`);
+    });
+
+    // Case filter
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const caseCards = document.querySelectorAll('.case-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => {
+          b.classList.remove('active', 'bg-accent/10', 'text-accent', 'border-accent/20');
+          b.classList.add('text-gray-400', 'border-white/10');
+        });
+        btn.classList.add('active', 'bg-accent/10', 'text-accent', 'border-accent/20');
+        btn.classList.remove('text-gray-400', 'border-white/10');
+
+        const filter = btn.dataset.filter;
+        caseCards.forEach(card => {
+          if (filter === 'all' || card.dataset.category === filter) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-toggle').forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        const item = toggle.closest('.faq-item');
+        const content = item.querySelector('.faq-content');
+        const icon = toggle.querySelector('.faq-icon');
+        const isOpen = !content.classList.contains('hidden');
+
+        // Close all
+        document.querySelectorAll('.faq-content').forEach(c => c.classList.add('hidden'));
+        document.querySelectorAll('.faq-icon').forEach(i => i.style.transform = '');
+        document.querySelectorAll('.faq-toggle').forEach(t => t.setAttribute('aria-expanded', 'false'));
+
+        if (!isOpen) {
+          content.classList.remove('hidden');
+          icon.style.transform = 'rotate(180deg)';
+          toggle.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+
+    // Contact form — sends to KeyCRM via backend
+    const form = document.getElementById('contact-form');
+    const successMsg = document.getElementById('form-success');
+    const errorMsg = document.getElementById('form-error');
+    let isSubmitting = false;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (isSubmitting) return;
+      successMsg.classList.add('hidden');
+      errorMsg.classList.add('hidden');
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData);
+
+      if (!data.name || !data.telegram || !data.email || !data.niche || !data.budget || !data.experience) {
+        errorMsg.textContent = 'Пожалуйста, заполните все поля';
+        errorMsg.classList.remove('hidden');
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(data.email)) {
+        errorMsg.textContent = 'Введите корректный email';
+        errorMsg.classList.remove('hidden');
+        return;
+      }
+
+      const submitBtn = document.getElementById('submit-btn');
+      submitBtn.textContent = 'Отправка...';
+      submitBtn.disabled = true;
+      isSubmitting = true;
+
+      try {
+        const endpoint = window.location.origin + '/api/submit';
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        let result = {};
+        try { result = await response.json(); } catch (_) {}
+
+        if (!response.ok || !result.success) {
+          throw new Error(result.message || 'Ошибка сервера');
+        }
+
+        submitBtn.textContent = 'Отправлено!';
+        submitBtn.classList.remove('bg-accent', 'hover:bg-accent-hover');
+        submitBtn.classList.add('bg-dark-600');
+        successMsg.textContent = 'Заявка отправлена! Свяжусь с вами в течение 24 часов.';
+        successMsg.classList.remove('hidden');
+
+        setTimeout(() => {
+          form.reset();
+          submitBtn.textContent = 'Обсудить проект';
+          submitBtn.disabled = false;
+          submitBtn.classList.add('bg-accent', 'hover:bg-accent-hover');
+          submitBtn.classList.remove('bg-dark-600');
+          successMsg.classList.add('hidden');
+          isSubmitting = false;
+        }, 4000);
+
+      } catch (error) {
+        errorMsg.textContent = error.message.includes('Failed to fetch')
+          ? 'Сервер недоступен. Откройте сайт через http, не через файл.'
+          : error.message;
+        errorMsg.classList.remove('hidden');
+        submitBtn.textContent = 'Обсудить проект';
+        submitBtn.disabled = false;
+        isSubmitting = false;
+      }
+    });
+
+    // Navbar background + scroll gradient
+    const nav = document.querySelector('nav');
+    const hero = document.getElementById('hero');
+    const gradientOverlay = document.getElementById('gradient-overlay');
+
+    function updateGradient() {
+      // Navbar
+      if (window.scrollY > 50) {
+        nav.classList.add('bg-dark-900/95');
+        nav.classList.remove('bg-dark-900/80');
+      } else {
+        nav.classList.remove('bg-dark-900/95');
+        nav.classList.add('bg-dark-900/80');
+      }
+
+      // Full-page colorful gradient based on scroll position
+      if (!gradientOverlay) return;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const t = maxScroll > 0 ? window.scrollY / maxScroll : 0; // 0..1
+
+      // Color journey: deep indigo → teal → emerald → deep blue-violet
+      // Using HSL for smooth interpolation
+      const h1 = 230 - t * 80;  // 230 → 150 (indigo → teal)
+      const h2 = 200 - t * 60;  // 200 → 140 (blue → emerald)
+      const h3 = 260 - t * 100; // 260 → 160 (violet → green-blue)
+      const s1 = 40 + t * 15;   // saturation increases slightly
+      const s2 = 35 + t * 20;
+      const s3 = 30 + t * 15;
+      const l1 = 6 + t * 3;     // lightness stays very dark but shifts
+      const l2 = 5 + t * 4;
+      const l3 = 4 + t * 3;
+
+      gradientOverlay.style.background = `linear-gradient(175deg,
+        hsl(${h1}, ${s1}%, ${l1}%) 0%,
+        hsl(${h2}, ${s2}%, ${l2}%) 45%,
+        hsl(${h3}, ${s3}%, ${l3}%) 100%)`;
+    }
+
+    window.addEventListener('scroll', updateGradient, { passive: true });
+    updateGradient();
+  </script>
+</body>
+</html>
