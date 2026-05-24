@@ -53,6 +53,7 @@ app.post('/api/submit', async (req, res) => {
 
     const managerComment = `Заявка с сайта TrafficPro
 
+Telegram: ${formData.telegram || 'Не указано'}
 Ниша: ${formData.niche || 'Не указано'}
 Бюджет: ${formData.budget || 'Не указано'}
 Опыт рекламы: ${formData.experience || 'Не указано'}`;
@@ -62,7 +63,7 @@ app.post('/api/submit', async (req, res) => {
       pipeline_id: 1,
       contact: {
         full_name: formData.name,
-        phone: formData.telegram,
+        phone: formData.telegram || '',
         email: formData.email
       },
       manager_comment: managerComment
