@@ -165,20 +165,15 @@
       console.error('Failed to load submission data:', e);
     }
 
-    // CAPI placeholder — fires a page view event
-    // Replace with your actual Meta CAPI / Google Conversion pixel
-    (function() {
-      // Meta CAPI: log Lead event via browser pixel
-      // fbq('track', 'Lead');
+    function fireConversion() {
       gtag('event', 'conversion', {'send_to': 'AW-18186592858/5rjyCP_sj7McENrEheBD'});
-
-      // For now, log to console for debugging
-      const params = new URLSearchParams(window.location.search);
-      if (params.get('from') === 'form') {
-        console.log('[CAPI] Lead conversion event triggered');
-        console.log('[CAPI] Submission data available in localStorage: trafficpro_submission');
-      }
-    })();
+      console.log('[Google Ads] Conversion event fired');
+    }
+    if (document.readyState === 'complete') {
+      fireConversion();
+    } else {
+      window.addEventListener('load', fireConversion);
+    }
   </script>
 </body>
 </html>
