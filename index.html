@@ -222,9 +222,21 @@
     .dash-header.google { background: rgba(66,133,244,0.12); color: #8ab4f8; border-bottom: 2px solid #4285F4; }
     .dash-header.meta { background: rgba(24,119,242,0.12); color: #7db3ff; border-bottom: 2px solid #1877F2; }
     .dash-header.tiktok { background: rgba(254,44,85,0.10); color: #25F4EE; border-bottom: 2px solid #FE2C55; }
-    .dashboard-card.plat-google { border: 1.5px solid rgba(66,133,244,0.85); }
-    .dashboard-card.plat-meta { border: 1.5px solid rgba(24,119,242,0.85); }
-    .dashboard-card.plat-tiktok { border: 1.5px solid rgba(37,244,238,0.75); }
+    .dashboard-card.plat-google,
+    .dashboard-card.plat-meta,
+    .dashboard-card.plat-tiktok { border: 1.5px solid transparent; }
+    .dashboard-card.plat-google {
+      background: linear-gradient(#0d1117, #0d1117) padding-box,
+                  linear-gradient(90deg, #4285F4, #EA4335, #FBBC05, #34A853, #4285F4) border-box;
+    }
+    .dashboard-card.plat-meta {
+      background: linear-gradient(#0d1117, #0d1117) padding-box,
+                  linear-gradient(90deg, #eef4ff, #1877F2, #eef4ff) border-box;
+    }
+    .dashboard-card.plat-tiktok {
+      background: linear-gradient(#0d1117, #0d1117) padding-box,
+                  linear-gradient(90deg, #25F4EE, #fff, #FE2C55, #25F4EE) border-box;
+    }
     /* Chart reveal animation */
     .dashboard-card .dash-chart svg .draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
     .dashboard-card.animated .dash-chart svg .draw { stroke-dashoffset: 0; transition: stroke-dashoffset 1.5s ease-out; }
@@ -861,7 +873,7 @@
         <div class="dashboard-card reveal-scale plat-tiktok" data-case="6">
           <div class="dash-header tiktok">
             <span>TikTok Ads</span>
-            <span style="opacity:0.6;font-weight:400">первые 5 дней</span>
+            <span style="opacity:0.6;font-weight:400">22.04-29.10.2026</span>
           </div>
           <div class="dash-metrics">
             <div><small>FIRST LEAD</small><strong>День 1</strong><span class="trend up">↑ с первого дня</span></div>
