@@ -143,9 +143,9 @@
       pointer-events: none;
       transition: background 1s cubic-bezier(0.4, 0, 0.2, 1);
       background: linear-gradient(165deg,
-        hsla(293, 70%, 11%, 0.94) 0%,
-        hsla(275, 65%, 9%, 0.94) 45%,
-        hsla(245, 60%, 8%, 0.94) 100%);
+        hsla(293, 88%, 15%, 0.95) 0%,
+        hsla(275, 82%, 12%, 0.95) 45%,
+        hsla(245, 78%, 10%, 0.95) 100%);
     }
 
     ::-webkit-scrollbar { width: 8px; }
@@ -721,7 +721,7 @@
   </section>
 
   <!-- Results Section -->
-  <section id="results" class="py-24 sm:py-32 bg-dark-800/50">
+  <section id="results" class="py-24 sm:py-32 bg-gradient-to-b from-transparent via-dark-800/35 to-transparent">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       <div class="text-center mb-16 reveal">
         <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">Результати в цифрах</h2>
@@ -950,7 +950,7 @@
   </section>
 
   <!-- Pricing Section -->
-  <section id="pricing" class="py-24 sm:py-32 bg-dark-800/50">
+  <section id="pricing" class="py-24 sm:py-32 bg-gradient-to-b from-transparent via-dark-800/35 to-transparent">
     <div class="max-w-4xl mx-auto px-4 sm:px-6">
       <div class="text-center mb-16 reveal">
         <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">Ціни</h2>
@@ -992,7 +992,7 @@
   </section>
 
   <!-- FAQ Section -->
-  <section id="faq" class="py-24 sm:py-32 bg-dark-800/50">
+  <section id="faq" class="py-24 sm:py-32 bg-gradient-to-b from-transparent via-dark-800/35 to-transparent">
     <div class="max-w-3xl mx-auto px-4 sm:px-6">
       <div class="text-center mb-16 reveal">
         <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">FAQ</h2>
@@ -1335,9 +1335,9 @@
       // Color journey: purple -> pink -> blue -> green (piecewise, no sharp breaks)
       const h = hueJourney(t);
       gradientOverlay.style.background = `linear-gradient(165deg,
-        hsla(${h + 18}, 70%, 11%, 0.94) 0%,
-        hsla(${h}, 65%, 9%, 0.94) 45%,
-        hsla(${h - 30}, 60%, 8%, 0.94) 100%)`;
+        hsla(${h + 18}, 88%, 15%, 0.95) 0%,
+        hsla(${h}, 82%, 12%, 0.95) 45%,
+        hsla(${h - 30}, 78%, 10%, 0.95) 100%)`;
     }
 
     window.addEventListener('scroll', updateGradient, { passive: true });
