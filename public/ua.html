@@ -219,8 +219,36 @@
       align-items: center;
       justify-content: space-between;
     }
-    .dash-header.google { background: #1a56db; color: #fff; }
-    .dash-header.meta { background: #1877f2; color: #fff; }
+    .dash-header.google { background: rgba(66,133,244,0.12); color: #8ab4f8; border-bottom: 2px solid #4285F4; }
+    .dash-header.meta { background: rgba(24,119,242,0.12); color: #7db3ff; border-bottom: 2px solid #1877F2; }
+    .dash-header.tiktok { background: rgba(254,44,85,0.10); color: #25F4EE; border-bottom: 2px solid #FE2C55; }
+    .dashboard-card.plat-google { border-color: rgba(66,133,244,0.45); }
+    .dashboard-card.plat-meta { border-color: rgba(24,119,242,0.45); }
+    .dashboard-card.plat-tiktok { border-color: rgba(254,44,85,0.40); }
+    /* Chart reveal animation */
+    .dashboard-card .dash-chart svg .draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
+    .dashboard-card.animated .dash-chart svg .draw { stroke-dashoffset: 0; transition: stroke-dashoffset 1.8s ease-out 0.25s; }
+    .dashboard-card .dash-chart svg .fade { opacity: 0; }
+    .dashboard-card.animated .dash-chart svg .fade { opacity: 1; transition: opacity 1.2s ease 0.25s; }
+    .dashboard-card .dash-chart svg .bar { transform: scaleY(0); transform-origin: 50% 100%; transform-box: fill-box; }
+    .dashboard-card.animated .dash-chart svg .bar { transform: scaleY(1); transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.3, 1); }
+    .dashboard-card .dash-chart svg .bar:nth-of-type(2) { transition-delay: 0.08s; }
+    .dashboard-card .dash-chart svg .bar:nth-of-type(3) { transition-delay: 0.16s; }
+    .dashboard-card .dash-chart svg .bar:nth-of-type(4) { transition-delay: 0.24s; }
+    .dashboard-card .dash-chart svg .bar:nth-of-type(5) { transition-delay: 0.32s; }
+    .dashboard-card .dash-chart svg .bar:nth-of-type(6) { transition-delay: 0.40s; }
+    .dashboard-card .dash-chart svg .bar:nth-of-type(7) { transition-delay: 0.48s; }
+    .dashboard-card .dash-chart svg .bar:nth-of-type(8) { transition-delay: 0.56s; }
+    .dashboard-card .dash-chart svg .bar:nth-of-type(9) { transition-delay: 0.64s; }
+    .dashboard-card .dash-chart svg .bar:nth-of-type(10) { transition-delay: 0.72s; }
+    .dashboard-card .dash-metrics > div { opacity: 0; transform: translateY(8px); }
+    .dashboard-card.animated .dash-metrics > div { opacity: 1; transform: none; transition: opacity 0.5s ease, transform 0.5s ease; }
+    .dashboard-card.animated .dash-metrics > div:nth-child(2) { transition-delay: 0.15s; }
+    .dashboard-card.animated .dash-metrics > div:nth-child(3) { transition-delay: 0.3s; }
+    #lightbox-body .dash-chart svg .draw { stroke-dashoffset: 0 !important; }
+    #lightbox-body .dash-chart svg .bar { transform: none !important; }
+    #lightbox-body .dash-chart svg .fade { opacity: 1 !important; }
+    #lightbox-body .dash-metrics > div { opacity: 1 !important; transform: none !important; }
     .dash-metrics {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -699,7 +727,7 @@
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
         <!-- Card 1: E-commerce / Google Ads -->
-        <div class="dashboard-card reveal-scale" data-case="0">
+        <div class="dashboard-card reveal-scale plat-google" data-case="0">
           <div class="dash-header google">
             <span>Google Ads</span>
             <span style="opacity:0.6;font-weight:400">01.02 – 28.02.2025</span>
@@ -712,9 +740,9 @@
           <div class="dash-chart">
             <svg viewBox="0 0 400 120" fill="none">
               <defs><linearGradient id="cg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#34d399" stop-opacity="0.25"/><stop offset="100%" stop-color="#34d399" stop-opacity="0.01"/></linearGradient></defs>
-              <path d="M0,100 C40,95 80,88 120,78 C160,68 200,56 240,46 C280,36 320,22 360,16 L400,8 L400,120 L0,120Z" fill="url(#cg1)"/>
-              <path d="M0,100 C40,95 80,88 120,78 C160,68 200,56 240,46 C280,36 320,22 360,16 L400,8" stroke="#34d399" stroke-width="2.5" stroke-linecap="round"/>
-              <circle cx="400" cy="8" r="3" fill="#34d399"/><circle cx="400" cy="8" r="7" fill="#34d399" opacity="0.15"/>
+              <path class="fade" d="M0,100 C40,95 80,88 120,78 C160,68 200,56 240,46 C280,36 320,22 360,16 L400,8 L400,120 L0,120Z" fill="url(#cg1)"/>
+              <path class="draw" pathLength="1" d="M0,100 C40,95 80,88 120,78 C160,68 200,56 240,46 C280,36 320,22 360,16 L400,8" stroke="#34d399" stroke-width="2.5" stroke-linecap="round"/>
+              <circle class="fade" cx="400" cy="8" r="3" fill="#34d399"/><circle class="fade" cx="400" cy="8" r="7" fill="#34d399" opacity="0.15"/>
             </svg>
           </div>
           <div class="case-desc">
@@ -724,7 +752,7 @@
         </div>
 
         <!-- Card 2: SaaS / Meta Ads -->
-        <div class="dashboard-card reveal-scale" data-case="1">
+        <div class="dashboard-card reveal-scale plat-meta" data-case="1">
           <div class="dash-header meta">
             <span>Meta Ads</span>
             <span style="opacity:0.6;font-weight:400">15.01 – 15.02.2025</span>
@@ -737,15 +765,15 @@
           <div class="dash-chart">
             <svg viewBox="0 0 400 120" fill="none">
               <defs><linearGradient id="cg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3b82f6" stop-opacity="0.3"/><stop offset="100%" stop-color="#3b82f6" stop-opacity="0.01"/></linearGradient></defs>
-              <rect x="10" y="90" width="30" height="30" rx="3" fill="#3b82f6" opacity="0.4"/>
-              <rect x="55" y="82" width="30" height="38" rx="3" fill="#3b82f6" opacity="0.5"/>
-              <rect x="100" y="72" width="30" height="48" rx="3" fill="#3b82f6" opacity="0.5"/>
-              <rect x="145" y="65" width="30" height="55" rx="3" fill="#3b82f6" opacity="0.6"/>
-              <rect x="190" y="55" width="30" height="65" rx="3" fill="#3b82f6" opacity="0.6"/>
-              <rect x="235" y="45" width="30" height="75" rx="3" fill="#3b82f6" opacity="0.7"/>
-              <rect x="280" y="35" width="30" height="85" rx="3" fill="#3b82f6" opacity="0.8"/>
-              <rect x="325" y="22" width="30" height="98" rx="3" fill="#3b82f6" opacity="0.9"/>
-              <rect x="370" y="10" width="30" height="110" rx="3" fill="#3b82f6"/>
+              <rect class="bar" x="10" y="90" width="30" height="30" rx="3" fill="#3b82f6" opacity="0.4"/>
+              <rect class="bar" x="55" y="82" width="30" height="38" rx="3" fill="#3b82f6" opacity="0.5"/>
+              <rect class="bar" x="100" y="72" width="30" height="48" rx="3" fill="#3b82f6" opacity="0.5"/>
+              <rect class="bar" x="145" y="65" width="30" height="55" rx="3" fill="#3b82f6" opacity="0.6"/>
+              <rect class="bar" x="190" y="55" width="30" height="65" rx="3" fill="#3b82f6" opacity="0.6"/>
+              <rect class="bar" x="235" y="45" width="30" height="75" rx="3" fill="#3b82f6" opacity="0.7"/>
+              <rect class="bar" x="280" y="35" width="30" height="85" rx="3" fill="#3b82f6" opacity="0.8"/>
+              <rect class="bar" x="325" y="22" width="30" height="98" rx="3" fill="#3b82f6" opacity="0.9"/>
+              <rect class="bar" x="370" y="10" width="30" height="110" rx="3" fill="#3b82f6"/>
             </svg>
           </div>
           <div class="case-desc">
@@ -755,7 +783,7 @@
         </div>
 
         <!-- Card 3: HR / Facebook Lead Ads -->
-        <div class="dashboard-card reveal-scale" data-case="2">
+        <div class="dashboard-card reveal-scale plat-meta" data-case="2">
           <div class="dash-header meta">
             <span>Facebook Lead Ads</span>
             <span style="opacity:0.6;font-weight:400">01.03 – 31.03.2025</span>
@@ -768,9 +796,9 @@
           <div class="dash-chart">
             <svg viewBox="0 0 400 120" fill="none">
               <defs><linearGradient id="cg3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#34d399" stop-opacity="0.25"/><stop offset="100%" stop-color="#34d399" stop-opacity="0.01"/></linearGradient></defs>
-              <path d="M0,105 L50,100 L100,95 L150,88 L200,78 L250,65 L300,50 L350,35 L400,18 L400,120 L0,120Z" fill="url(#cg3)"/>
-              <path d="M0,105 L50,100 L100,95 L150,88 L200,78 L250,65 L300,50 L350,35 L400,18" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="400" cy="18" r="3" fill="#34d399"/><circle cx="400" cy="18" r="7" fill="#34d399" opacity="0.15"/>
+              <path class="fade" d="M0,105 L50,100 L100,95 L150,88 L200,78 L250,65 L300,50 L350,35 L400,18 L400,120 L0,120Z" fill="url(#cg3)"/>
+              <path class="draw" pathLength="1" d="M0,105 L50,100 L100,95 L150,88 L200,78 L250,65 L300,50 L350,35 L400,18" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle class="fade" cx="400" cy="18" r="3" fill="#34d399"/><circle class="fade" cx="400" cy="18" r="7" fill="#34d399" opacity="0.15"/>
             </svg>
           </div>
           <div class="case-desc">
@@ -780,7 +808,7 @@
         </div>
 
         <!-- Card 4: Education / Google Ads -->
-        <div class="dashboard-card reveal-scale" data-case="3">
+        <div class="dashboard-card reveal-scale plat-google" data-case="3">
           <div class="dash-header google">
             <span>Google Ads</span>
             <span style="opacity:0.6;font-weight:400">01.04 – 30.04.2025</span>
@@ -793,9 +821,9 @@
           <div class="dash-chart">
             <svg viewBox="0 0 400 120" fill="none">
               <defs><linearGradient id="cg4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#06b6d4" stop-opacity="0.25"/><stop offset="100%" stop-color="#06b6d4" stop-opacity="0.01"/></linearGradient></defs>
-              <path d="M0,108 C50,102 100,95 150,85 C200,75 250,60 300,48 C340,38 370,28 400,20 L400,120 L0,120Z" fill="url(#cg4)"/>
-              <path d="M0,108 C50,102 100,95 150,85 C200,75 250,60 300,48 C340,38 370,28 400,20" stroke="#06b6d4" stroke-width="2.5" stroke-linecap="round"/>
-              <circle cx="300" cy="48" r="3" fill="#06b6d4"/><circle cx="400" cy="20" r="3" fill="#06b6d4"/><circle cx="400" cy="20" r="7" fill="#06b6d4" opacity="0.15"/>
+              <path class="fade" d="M0,108 C50,102 100,95 150,85 C200,75 250,60 300,48 C340,38 370,28 400,20 L400,120 L0,120Z" fill="url(#cg4)"/>
+              <path class="draw" pathLength="1" d="M0,108 C50,102 100,95 150,85 C200,75 250,60 300,48 C340,38 370,28 400,20" stroke="#06b6d4" stroke-width="2.5" stroke-linecap="round"/>
+              <circle class="fade" cx="300" cy="48" r="3" fill="#06b6d4"/><circle class="fade" cx="400" cy="20" r="3" fill="#06b6d4"/><circle class="fade" cx="400" cy="20" r="7" fill="#06b6d4" opacity="0.15"/>
             </svg>
           </div>
           <div class="case-desc">
@@ -805,7 +833,7 @@
         </div>
 
         <!-- Card 5: Real Estate / Meta Ads -->
-        <div class="dashboard-card reveal-scale" data-case="4">
+        <div class="dashboard-card reveal-scale plat-meta" data-case="4">
           <div class="dash-header meta">
             <span>Meta Ads</span>
             <span style="opacity:0.6;font-weight:400">01.05 – 15.06.2025</span>
@@ -818,9 +846,9 @@
           <div class="dash-chart">
             <svg viewBox="0 0 400 120" fill="none">
               <defs><linearGradient id="cg5" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.25"/><stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.01"/></linearGradient></defs>
-              <path d="M0,95 C60,90 120,85 180,78 C240,68 280,55 320,42 C360,30 380,22 400,15 L400,120 L0,120Z" fill="url(#cg5)"/>
-              <path d="M0,95 C60,90 120,85 180,78 C240,68 280,55 320,42 C360,30 380,22 400,15" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round"/>
-              <circle cx="400" cy="15" r="3" fill="#8b5cf6"/><circle cx="400" cy="15" r="7" fill="#8b5cf6" opacity="0.15"/>
+              <path class="fade" d="M0,95 C60,90 120,85 180,78 C240,68 280,55 320,42 C360,30 380,22 400,15 L400,120 L0,120Z" fill="url(#cg5)"/>
+              <path class="draw" pathLength="1" d="M0,95 C60,90 120,85 180,78 C240,68 280,55 320,42 C360,30 380,22 400,15" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round"/>
+              <circle class="fade" cx="400" cy="15" r="3" fill="#8b5cf6"/><circle class="fade" cx="400" cy="15" r="7" fill="#8b5cf6" opacity="0.15"/>
             </svg>
           </div>
           <div class="case-desc">
@@ -830,7 +858,7 @@
         </div>
 
         <!-- Card 6: Legal / Google Ads -->
-        <div class="dashboard-card reveal-scale" data-case="5">
+        <div class="dashboard-card reveal-scale plat-google" data-case="5">
           <div class="dash-header google">
             <span>Google Ads</span>
             <span style="opacity:0.6;font-weight:400">01.01 – 31.03.2025</span>
@@ -843,14 +871,39 @@
           <div class="dash-chart">
             <svg viewBox="0 0 400 120" fill="none">
               <defs><linearGradient id="cg6" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#34d399" stop-opacity="0.25"/><stop offset="100%" stop-color="#34d399" stop-opacity="0.01"/></linearGradient></defs>
-              <path d="M0,100 C50,96 100,90 150,82 C200,72 250,60 300,48 C340,38 370,25 400,15 L400,120 L0,120Z" fill="url(#cg6)"/>
-              <path d="M0,100 C50,96 100,90 150,82 C200,72 250,60 300,48 C340,38 370,25 400,15" stroke="#34d399" stroke-width="2.5" stroke-linecap="round"/>
-              <circle cx="200" cy="72" r="3" fill="#34d399"/><circle cx="400" cy="15" r="3" fill="#34d399"/><circle cx="400" cy="15" r="7" fill="#34d399" opacity="0.15"/>
+              <path class="fade" d="M0,100 C50,96 100,90 150,82 C200,72 250,60 300,48 C340,38 370,25 400,15 L400,120 L0,120Z" fill="url(#cg6)"/>
+              <path class="draw" pathLength="1" d="M0,100 C50,96 100,90 150,82 C200,72 250,60 300,48 C340,38 370,25 400,15" stroke="#34d399" stroke-width="2.5" stroke-linecap="round"/>
+              <circle class="fade" cx="200" cy="72" r="3" fill="#34d399"/><circle class="fade" cx="400" cy="15" r="3" fill="#34d399"/><circle class="fade" cx="400" cy="15" r="7" fill="#34d399" opacity="0.15"/>
             </svg>
           </div>
           <div class="case-desc">
             <h4>Юридична фірма</h4>
             <p>Юридична компанія спеціалізувалася на корпоративному праві. Запустили Search-кампанії з фокусом на B2B-запити. Отримали 210 консультацій за квартал при CPA $9.50, 34 призвели до укладення договору.</p>
+          </div>
+        </div>
+
+        <!-- Card 7: Chargeback / TikTok Ads -->
+        <div class="dashboard-card reveal-scale plat-tiktok" data-case="6">
+          <div class="dash-header tiktok">
+            <span>TikTok Ads</span>
+            <span style="opacity:0.6;font-weight:400">перші 5 днів</span>
+          </div>
+          <div class="dash-metrics">
+            <div><small>FIRST LEAD</small><strong>День 1</strong><span class="trend up">↑ з першого дня</span></div>
+            <div><small>CPL</small><strong style="color:#34d399">260 грн</strong><span class="trend down">↓ у 4 рази</span></div>
+            <div><small>NICHE</small><strong>Chargeback</strong></div>
+          </div>
+          <div class="dash-chart">
+            <svg viewBox="0 0 400 120" fill="none">
+              <defs><linearGradient id="cg7" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FE2C55" stop-opacity="0.25"/><stop offset="100%" stop-color="#25F4EE" stop-opacity="0.01"/></linearGradient></defs>
+              <path class="fade" d="M0,20 C60,28 120,40 180,55 C240,70 300,82 350,90 L400,95 L400,120 L0,120Z" fill="url(#cg7)"/>
+              <path class="draw" pathLength="1" d="M0,20 C60,28 120,40 180,55 C240,70 300,82 350,90 L400,95" stroke="#25F4EE" stroke-width="2.5" stroke-linecap="round"/>
+              <circle class="fade" cx="400" cy="95" r="3" fill="#25F4EE"/><circle class="fade" cx="400" cy="95" r="7" fill="#25F4EE" opacity="0.15"/>
+            </svg>
+          </div>
+          <div class="case-desc">
+            <h4>Пошук клієнтів у ніші Chargeback</h4>
+            <p>Компанія шукала нових клієнтів на TikTok. Перші заявки прийшли вже в перший день запуску. До 5-го дня ціна заявки впала в 4 рази і досягла 260 грн.</p>
           </div>
         </div>
 
@@ -1503,7 +1556,7 @@
       let scrollHue = 0, targetHue = 0;
       let W, H, cx, cy, particles = [], mouse = { x: -9999, y: -9999 };
       const isMobile = window.matchMedia('(max-width: 768px)').matches;
-      const COUNT = isMobile ? 90 : 210;
+      const COUNT = isMobile ? 270 : 630;
 
       function resize() {
         W = canvas.width = canvas.offsetWidth;
@@ -1518,7 +1571,7 @@
         mouse.y = e.clientY - rect.top;
       });
       window.addEventListener('mouseout', () => { mouse.x = -9999; mouse.y = -9999; });
-      window.addEventListener('scroll', () => { targetHue = window.scrollY * 0.03; }, { passive: true });
+      window.addEventListener('scroll', () => { targetHue = window.scrollY * 0.09; }, { passive: true });
 
       function spawn() {
         const angle = Math.random() * Math.PI * 2;
@@ -1540,20 +1593,7 @@
         ctx.clearRect(0, 0, W, H);
         scrollHue += (targetHue - scrollHue) * 0.05;
 
-        // black hole core
-        const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 80);
-        grad.addColorStop(0, 'rgba(0,0,0,0.85)');
-        grad.addColorStop(0.55, 'rgba(11,15,26,0.4)');
-        grad.addColorStop(1, 'rgba(11,15,26,0)');
-        ctx.beginPath();
-        ctx.arc(cx, cy, 80, 0, Math.PI * 2);
-        ctx.fillStyle = grad;
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(cx, cy, 46, 0, Math.PI * 2);
-        ctx.strokeStyle = `hsla(${142 + scrollHue}, 80%, 45%, 0.18)`;
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
+
 
         for (const p of particles) {
           p.angle += p.speed;
@@ -1580,7 +1620,7 @@
           ctx.globalAlpha = p.alpha * (1 - Math.min(0.5, p.radius / (Math.max(W, H) * 0.55)));
           ctx.beginPath();
           ctx.arc(x, y, p.size, 0, Math.PI * 2);
-          ctx.fillStyle = `hsl(${p.hue + scrollHue}, 70%, 60%)`;
+          ctx.fillStyle = `hsl(${p.hue + scrollHue + (p.radius / (Math.max(W, H) * 0.5)) * 55}, 70%, 60%)`;
           ctx.shadowColor = ctx.fillStyle;
           ctx.shadowBlur = 4 + blur * 3;
           ctx.fill();
@@ -1590,6 +1630,17 @@
         requestAnimationFrame(tick);
       }
       tick();
+    })();
+  </script>
+  <script>
+    // Animate dashboard charts when visible
+    (() => {
+      const cards = document.querySelectorAll('.dashboard-card');
+      if (!('IntersectionObserver' in window)) { cards.forEach(c => c.classList.add('animated')); return; }
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('animated'); obs.unobserve(e.target); } });
+      }, { threshold: 0.25 });
+      cards.forEach(c => obs.observe(c));
     })();
   </script>
 </body>
