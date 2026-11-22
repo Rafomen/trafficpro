@@ -95,6 +95,10 @@ export default {
       });
     }
 
+    if (url.pathname === '/api/geo') {
+      return jsonResponse({ country: (request.cf && request.cf.country) || null });
+    }
+
     if (url.pathname === '/api/submit' && request.method === 'POST') {
       return handleSubmit(request, env);
     }
