@@ -4,6 +4,9 @@ const cors = require('cors');
 const fetch = require('node-fetch');
 const path = require('path');
 
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -41,53 +44,40 @@ app.post('/api/submit', async (req, res) => {
     }
 
     const formData = req.body;
-    const apiKey = process.env.KEYCRM_API_KEY;
-    const sourceId = parseInt(process.env.KEYCRM_SOURCE_ID, 10);
 
-    if (!apiKey || !sourceId) {
+    if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
       return res.status(500).json({
         success: false,
-        message: 'API ключ или ID источника не настроены'
+        message: 'Telegram не настроен (TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID)'
       });
     }
 
-    const managerComment = `Заявка с сайта TrafficPro
+    const escapeHtml = (s) =>
+      String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-Telegram: ${formData.telegram || 'Не указано'}
-Ниша: ${formData.niche || 'Не указано'}
-Бюджет: ${formData.budget || 'Не указано'}
-Опыт рекламы: ${formData.experience || 'Не указано'}`;
+    const message =
+      `🔔 <b>Новая заявка с сайта TrafficPro</b>\n\n` +
+      `👤 Имя: ${escapeHtml(formData.name) || 'Не указано'}\n` +
+      `✈️ Telegram: ${escapeHtml(formData.telegram) || 'Не указано'}\n` +
+      `📧 Email: ${escapeHtml(formData.email) || 'Не указано'}\n` +
+      `💼 Ниша: ${escapeHtml(formData.niche) || 'Не указано'}\n` +
+      `💰 Бюджет: ${escapeHtml(formData.budget) || 'Не указано'}\n` +
+      `📊 Опыт рекламы: ${escapeHtml(formData.experience) || 'Не указано'}`;
 
-    const keycrmData = {
-      source_id: sourceId,
-      pipeline_id: 1,
-      contact: {
-        full_name: formData.name,
-        phone: formData.telegram || '',
-        email: formData.email
-      },
-      manager_comment: managerComment
-    };
-
-    const response = await fetch('https://openapi.keycrm.app/v1/leads', {
+    const tgResponse = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify(keycrmData),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: message,
+        parse_mode: 'HTML'
+      })
     });
 
-    const responseData = await response.json();
+    const tgData = await tgResponse.json();
 
-    if (!response.ok) {
-      const errorMessage = responseData.message
-        || responseData.error
-        || JSON.stringify(responseData)
-        || `KeyCRM API Error (${response.status})`;
-
-      throw new Error(errorMessage);
+    if (!tgResponse.ok || !tgData.ok) {
+      throw new Error(`Telegram API Error: ${tgData.description || tgResponse.status}`);
     }
 
     // Mark IP as submitted only after successful KeyCRM response
@@ -95,8 +85,7 @@ Telegram: ${formData.telegram || 'Не указано'}
 
     res.status(200).json({
       success: true,
-      message: 'Заявка успешно отправлена',
-      data: responseData
+      message: 'Заявка успешно отправлена'
     });
 
   } catch (error) {
@@ -111,8 +100,7 @@ Telegram: ${formData.telegram || 'Не указано'}
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'OK',
-    hasApiKey: !!process.env.KEYCRM_API_KEY,
-    hasSourceId: !!process.env.KEYCRM_SOURCE_ID
+    telegramConfigured: !!(TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID)
   });
 });
 
