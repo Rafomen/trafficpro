@@ -222,25 +222,25 @@
     .dash-header.google { background: rgba(66,133,244,0.12); color: #8ab4f8; border-bottom: 2px solid #4285F4; }
     .dash-header.meta { background: rgba(24,119,242,0.12); color: #7db3ff; border-bottom: 2px solid #1877F2; }
     .dash-header.tiktok { background: rgba(254,44,85,0.10); color: #25F4EE; border-bottom: 2px solid #FE2C55; }
-    .dashboard-card.plat-google { border-color: rgba(66,133,244,0.45); }
-    .dashboard-card.plat-meta { border-color: rgba(24,119,242,0.45); }
-    .dashboard-card.plat-tiktok { border-color: rgba(254,44,85,0.40); }
+    .dashboard-card.plat-google { border: 1.5px solid rgba(66,133,244,0.85); }
+    .dashboard-card.plat-meta { border: 1.5px solid rgba(24,119,242,0.85); }
+    .dashboard-card.plat-tiktok { border: 1.5px solid rgba(37,244,238,0.75); }
     /* Chart reveal animation */
     .dashboard-card .dash-chart svg .draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
-    .dashboard-card.animated .dash-chart svg .draw { stroke-dashoffset: 0; transition: stroke-dashoffset 1.8s ease-out 0.25s; }
+    .dashboard-card.animated .dash-chart svg .draw { stroke-dashoffset: 0; transition: stroke-dashoffset 1.5s ease-out; }
     .dashboard-card .dash-chart svg .fade { opacity: 0; }
-    .dashboard-card.animated .dash-chart svg .fade { opacity: 1; transition: opacity 1.2s ease 0.25s; }
+    .dashboard-card.animated .dash-chart svg .fade { opacity: 1; transition: opacity 1.5s ease; }
     .dashboard-card .dash-chart svg .bar { transform: scaleY(0); transform-origin: 50% 100%; transform-box: fill-box; }
-    .dashboard-card.animated .dash-chart svg .bar { transform: scaleY(1); transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.3, 1); }
-    .dashboard-card .dash-chart svg .bar:nth-of-type(2) { transition-delay: 0.08s; }
-    .dashboard-card .dash-chart svg .bar:nth-of-type(3) { transition-delay: 0.16s; }
-    .dashboard-card .dash-chart svg .bar:nth-of-type(4) { transition-delay: 0.24s; }
-    .dashboard-card .dash-chart svg .bar:nth-of-type(5) { transition-delay: 0.32s; }
-    .dashboard-card .dash-chart svg .bar:nth-of-type(6) { transition-delay: 0.40s; }
-    .dashboard-card .dash-chart svg .bar:nth-of-type(7) { transition-delay: 0.48s; }
-    .dashboard-card .dash-chart svg .bar:nth-of-type(8) { transition-delay: 0.56s; }
-    .dashboard-card .dash-chart svg .bar:nth-of-type(9) { transition-delay: 0.64s; }
-    .dashboard-card .dash-chart svg .bar:nth-of-type(10) { transition-delay: 0.72s; }
+    .dashboard-card.animated .dash-chart svg .bar { transform: scaleY(1); transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.3, 1); }
+    .dashboard-card .dash-chart svg .bar:nth-of-type(2) { transition-delay: 0.07s; }
+    .dashboard-card .dash-chart svg .bar:nth-of-type(3) { transition-delay: 0.14s; }
+    .dashboard-card .dash-chart svg .bar:nth-of-type(4) { transition-delay: 0.21s; }
+    .dashboard-card .dash-chart svg .bar:nth-of-type(5) { transition-delay: 0.28s; }
+    .dashboard-card .dash-chart svg .bar:nth-of-type(6) { transition-delay: 0.35s; }
+    .dashboard-card .dash-chart svg .bar:nth-of-type(7) { transition-delay: 0.42s; }
+    .dashboard-card .dash-chart svg .bar:nth-of-type(8) { transition-delay: 0.49s; }
+    .dashboard-card .dash-chart svg .bar:nth-of-type(9) { transition-delay: 0.56s; }
+    .dashboard-card .dash-chart svg .bar:nth-of-type(10) { transition-delay: 0.63s; }
     .dashboard-card .dash-metrics > div { opacity: 0; transform: translateY(8px); }
     .dashboard-card.animated .dash-metrics > div { opacity: 1; transform: none; transition: opacity 0.5s ease, transform 0.5s ease; }
     .dashboard-card.animated .dash-metrics > div:nth-child(2) { transition-delay: 0.15s; }
@@ -779,31 +779,6 @@
           <div class="case-desc">
             <h4>Облачный SaaS-сервис</h4>
             <p>SaaS-платформа для автоматизации бизнеса обратилась с задачей увеличения trial-регистраций. Настроили Search-кампании с фокусом на длинные хвосты и lookalike-аудитории. Получили 412 подписок при CPA $8.40, 23% конвертировались в платящих.</p>
-          </div>
-        </div>
-
-        <!-- Card 3: HR / Facebook Lead Ads -->
-        <div class="dashboard-card reveal-scale plat-meta" data-case="2">
-          <div class="dash-header meta">
-            <span>Facebook Lead Ads</span>
-            <span style="opacity:0.6;font-weight:400">01.03 – 31.03.2025</span>
-          </div>
-          <div class="dash-metrics">
-            <div><small>LEADS</small><strong>340</strong><span class="trend up">↑ 120%</span></div>
-            <div><small>CPL</small><strong style="color:#34d399">$1.76</strong><span class="trend down">↓ 61%</span></div>
-            <div><small>HIRES</small><strong>38</strong><span class="trend up">↑ 85%</span></div>
-          </div>
-          <div class="dash-chart">
-            <svg viewBox="0 0 400 120" fill="none">
-              <defs><linearGradient id="cg3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#34d399" stop-opacity="0.25"/><stop offset="100%" stop-color="#34d399" stop-opacity="0.01"/></linearGradient></defs>
-              <path class="fade" d="M0,105 L50,100 L100,95 L150,88 L200,78 L250,65 L300,50 L350,35 L400,18 L400,120 L0,120Z" fill="url(#cg3)"/>
-              <path class="draw" pathLength="1" d="M0,105 L50,100 L100,95 L150,88 L200,78 L250,65 L300,50 L350,35 L400,18" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle class="fade" cx="400" cy="18" r="3" fill="#34d399"/><circle class="fade" cx="400" cy="18" r="7" fill="#34d399" opacity="0.15"/>
-            </svg>
-          </div>
-          <div class="case-desc">
-            <h4>Кадровое агентство</h4>
-            <p>Логистическая компания искала водителей-дальнобойщиков. Настроили Lead Ads с сегментацией по профессии и гео. За 4 недели получили 340 заявок при стоимости $1.76, 38 кандидатов были наняты.</p>
           </div>
         </div>
 
@@ -1637,9 +1612,36 @@
     (() => {
       const cards = document.querySelectorAll('.dashboard-card');
       if (!('IntersectionObserver' in window)) { cards.forEach(c => c.classList.add('animated')); return; }
+      const animateNumbers = (card) => {
+        card.querySelectorAll(".dash-metrics > div").forEach((m, i) => {
+          const strong = m.querySelector("strong");
+          if (!strong) return;
+          const txt = strong.textContent.trim();
+          const match = txt.match(/^([^0-9]*)([0-9]+(?:[.,][0-9]+)?)([^0-9.]*)$/);
+          if (!match || /[\u0400-\u04FF]/.test(match[1])) return;
+          const prefix = match[1], suffix = match[3];
+          const target = parseFloat(match[2].replace(",", "."));
+          if (!isFinite(target)) return;
+          const decimals = (match[2].split(".")[1] || "").length;
+          const from = m.querySelector('.trend.down') ? target * 4 : target * 0.2;
+          const dur = 1500;
+          setTimeout(() => {
+            const t0 = performance.now();
+            const frame = (now) => {
+              const p = Math.min(1, (now - t0) / dur);
+              const eased = 1 - Math.pow(1 - p, 3);
+              const val = from + (target - from) * eased;
+              strong.textContent = prefix + val.toFixed(decimals) + suffix;
+              if (p < 1) requestAnimationFrame(frame);
+              else strong.textContent = txt;
+            };
+            requestAnimationFrame(frame);
+          }, i * 150);
+        });
+      };
       const obs = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('animated'); obs.unobserve(e.target); } });
-      }, { threshold: 0.25 });
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('animated'); animateNumbers(e.target); obs.unobserve(e.target); } });
+      }, { threshold: 0.15 });
       cards.forEach(c => obs.observe(c));
     })();
   </script>
