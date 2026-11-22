@@ -1,11 +1,11 @@
 // Cloudflare Worker для trafficpro.net
 // Раздаёт статику (index.html и др.) + принимает заявки с формы и шлёт их в Telegram.
 
-const REQUIRED_FIELDS = ['name', 'telegram', 'email', 'niche', 'budget', 'experience'];
+const REQUIRED_FIELDS = ['name', 'telegram', 'email'];
 
-// Best-effort rate limit: 1 заявка с IP в сутки (живёт в рамках одного изолята воркера)
+// Rate limit: 1 заявка с IP в 10 минут
 const submissions = new Map();
-const ONE_DAY = 24 * 60 * 60 * 1000;
+const RATE_WINDOW = 10 * 60 * 1000;
 
 function escapeHtml(s) {
   return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -46,21 +46,23 @@ async function handleSubmit(request, env) {
   // Rate limit
   const now = Date.now();
   for (const [ip, ts] of submissions) {
-    if (now - ts > ONE_DAY) submissions.delete(ip);
+    if (now - ts > RATE_WINDOW) submissions.delete(ip);
   }
   const ip = getClientIp(request);
-  if (submissions.has(ip)) {
-    return jsonResponse({ success: false, message: 'Вы уже отправляли заявку сегодня. Попробуйте завтра.' }, 429);
+  const lastTs = submissions.get(ip);
+  if (lastTs) {
+    const minutesLeft = Math.max(1, Math.ceil((RATE_WINDOW - (now - lastTs)) / 60000));
+    return jsonResponse({
+      success: false,
+      message: `Заявка с этого IP уже отправлена. Повторите через ${minutesLeft} мин. Или напишите нам напрямую в Telegram: t.me/metagoogle_ads`
+    }, 429);
   }
 
   const message =
     `🔔 <b>Новая заявка с сайта TrafficPro</b>\n\n` +
     `👤 Имя: ${escapeHtml(data.name)}\n` +
     `✈️ Telegram: ${escapeHtml(data.telegram)}\n` +
-    `📧 Email: ${escapeHtml(data.email)}\n` +
-    `💼 Ниша: ${escapeHtml(data.niche)}\n` +
-    `💰 Бюджет: ${escapeHtml(data.budget)}\n` +
-    `📊 Опыт рекламы: ${escapeHtml(data.experience)}`;
+    `📧 Email: ${escapeHtml(data.email)}`;
 
   try {
     const tgResponse = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {

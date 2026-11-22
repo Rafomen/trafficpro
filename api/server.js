@@ -14,14 +14,14 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..')));
 
-// IP rate limiter: 1 submission per IP per 24 hours
+// IP rate limiter: 1 submission per IP per 10 minutes
 const submissions = new Map();
-const ONE_DAY = 24 * 60 * 60 * 1000;
+const RATE_WINDOW = 10 * 60 * 1000;
 
 function cleanupExpired() {
   const now = Date.now();
   for (const [ip, ts] of submissions) {
-    if (now - ts > ONE_DAY) submissions.delete(ip);
+    if (now - ts > RATE_WINDOW) submissions.delete(ip);
   }
 }
 
@@ -36,10 +36,12 @@ app.post('/api/submit', async (req, res) => {
     // Rate limit check
     cleanupExpired();
     const ip = getClientIp(req);
-    if (submissions.has(ip)) {
+    const lastTs = submissions.get(ip);
+    if (lastTs) {
+      const minutesLeft = Math.max(1, Math.ceil((RATE_WINDOW - (Date.now() - lastTs)) / 60000));
       return res.status(429).json({
         success: false,
-        message: 'Вы уже отправляли заявку сегодня. Попробуйте завтра.'
+        message: `Заявка с этого IP уже отправлена. Повторите через ${minutesLeft} мин. Или напишите нам напрямую в Telegram: t.me/metagoogle_ads`
       });
     }
 
@@ -59,10 +61,7 @@ app.post('/api/submit', async (req, res) => {
       `🔔 <b>Новая заявка с сайта TrafficPro</b>\n\n` +
       `👤 Имя: ${escapeHtml(formData.name) || 'Не указано'}\n` +
       `✈️ Telegram: ${escapeHtml(formData.telegram) || 'Не указано'}\n` +
-      `📧 Email: ${escapeHtml(formData.email) || 'Не указано'}\n` +
-      `💼 Ниша: ${escapeHtml(formData.niche) || 'Не указано'}\n` +
-      `💰 Бюджет: ${escapeHtml(formData.budget) || 'Не указано'}\n` +
-      `📊 Опыт рекламы: ${escapeHtml(formData.experience) || 'Не указано'}`;
+      `📧 Email: ${escapeHtml(formData.email) || 'Не указано'}`;
 
     const tgResponse = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
       method: 'POST',
