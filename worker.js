@@ -179,6 +179,7 @@ function trackVisit(request, env, ctx) {
       if (now - ts > VISIT_WINDOW) visitorSeen.delete(k);
     }
 
+    console.log('visit tracked:', ip, path);
     if (ctx && ctx.waitUntil) {
       ctx.waitUntil(notifyVisit(request, env, ip).catch(() => {}));
     }
