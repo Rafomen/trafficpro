@@ -62,7 +62,7 @@ app.use((req, res, next) => {
 
 function fmtTime() {
   return new Date().toLocaleString('ru-RU', {
-    timeZone: 'Europe/Moscow',
+    timeZone: 'Europe/Warsaw',
     day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
   });
 }
@@ -97,7 +97,7 @@ async function notifyVisit(req, ip) {
   const ua = req.headers['user-agent'] || '';
   const message =
     `👣 <b>Заход на сайт</b>\n` +
-    `🕐 ${fmtTime()} (МСК)\n` +
+    `🕐 ${fmtTime()} (ЦЕТ)\n` +
     `🌐 <code>${escapeHtml(ipClean)}</code>\n` +
     `${loc}\n` +
     `📄 ${escapeHtml(req.path)}\n` +
