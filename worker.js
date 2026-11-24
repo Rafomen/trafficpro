@@ -92,12 +92,25 @@ const visitorSeen = new Map();
 const BOT_UA_RE = /bot|crawl|spider|slurp|curl|wget|python|java\/|httpclient|http-client|headless|lighthouse|monitor|uptime|pingdom|semrush|ahrefs|mj12|dotbot|petalbot|bingpreview|facebookexternalhit|twitterbot|linkedinbot|telegrambot|whatsapp|preview|metatag|go-http|okhttp|axios|node-fetch|postman|insomnia|archive|validator|scanner|fuzz|nmap|masscan|zgrab/i;
 const REAL_BROWSER_RE = /mozilla|chrome|safari|firefox|edg|opera|gecko/i;
 
+// Страны, для которых слать уведомления о заходах (гео рекламных кампаний).
+// Всё остальное — боты/прокси/нерелевантный трафик — молча игнорируем.
+const NOTIFY_COUNTRIES = new Set(['UA']);
+
 function isSpider(request) {
   if (request.method !== 'GET') return true;
+  const accept = request.headers.get('accept') || '';
+  if (!accept.includes('text/html')) return true; // браузер за страницей всегда просит text/html
   const ua = request.headers.get('user-agent') || '';
   if (!ua) return true;                       // скрипты часто шлют пустой UA
   if (!REAL_BROWSER_RE.test(ua)) return true; // нет признаков браузера
   if (BOT_UA_RE.test(ua)) return true;
+  // настоящий браузер всегда шлёт Accept-Language — скрипты почти никогда
+  if (!request.headers.get('accept-language')) return true;
+  // Chrome/Edge/Firefox всегда шлют Sec-Fetch-*: если UA заявляет современный
+  // браузер, а заголовков нет — UA подделан (headless-скрипты, кликер-боты).
+  // Safari Sec-Fetch не шлёт, поэтому проверяем только Chromium/Firefox.
+  if (/chrome|edg\//i.test(ua) && !request.headers.has('sec-fetch-mode')) return true;
+  if (/firefox/i.test(ua) && !request.headers.has('sec-fetch-mode')) return true;
   return false;
 }
 
@@ -106,6 +119,26 @@ function isTrackablePath(p) {
   if (p.startsWith('/favicon')) return false;
   return p === '/' || p.endsWith('.html');
 }
+
+// ASN известных дата-центров/облаков — Cloudflare отдаёт бесплатно в request.cf
+const DC_ASNS = new Set([
+  16509, 14618, // Amazon AWS
+  15169, 396982, // Google / GCP
+  8075,         // Microsoft Azure
+  14061,        // DigitalOcean
+  24940,        // Hetzner
+  16276,        // OVH
+  63949,        // Linode / Akamai
+  20473,        // Vultr
+  31898,        // Oracle Cloud
+  45102, 37963, // Alibaba Cloud
+  9009, 208283, // M247 / GCore (популярные VPN-серверы)
+  49505,        // Selectel
+  51106,        // FirstDEDIC
+  44050,        // Peter-Host
+]);
+// Ключевые слова в имени организации (asOrganization) — страховка к списку ASN
+const DC_ORG_RE = /amazon|aws|azure|microsoft|google|digitalocean|hetzner|ovh|linode|vultr|oracle|alibaba|contabo|leaseweb|hostinger|gcore|selectel|timeweb|cloudflare|hosting|host|хостинг|data\s?cent|дата[- ]?цент|сервер|server|vps|vds|dedicated|colocation|колокейшн/i;
 
 function fmtTime() {
   return new Date().toLocaleString('ru-RU', {
@@ -119,6 +152,23 @@ async function notifyVisit(request, env, ip) {
 
   // Гео из объекта request.cf (Cloudflare отдаёт его бесплатно на каждом запросе)
   const cf = request.cf || {};
+  const asn = cf.asn;
+  const org = String(cf.asOrganization || '');
+
+  // Страна не из гео рекламных кампаний = нерелевантный трафик (боты/прокси,
+  // кликфрод). Скипаем молча ещё до запросов к ip-api.
+  const country = String(cf.country || '');
+  if (country && !NOTIFY_COUNTRIES.has(country)) {
+    console.log('skip visit notify (outside ad geo):', ip, country);
+    return;
+  }
+
+  // Дата-центр/облако по ASN или имени организации = бот или сервер, не живой человек.
+  // Бесплатно и без внешних запросов — отсекаем до ip-api.
+  if ((asn && DC_ASNS.has(asn)) || DC_ORG_RE.test(org)) {
+    console.log('skip visit notify (datacenter asn/org):', ip, asn, org);
+    return;
+  }
   let loc = '📍 Гео не определено';
   try {
     const names = new Intl.DisplayNames(['ru'], { type: 'region' });
@@ -128,18 +178,28 @@ async function notifyVisit(request, env, ip) {
     if (cf.country) loc = `📍 ${[cf.city, cf.region, cf.country].filter(Boolean).join(', ')}`;
   }
 
-  // Провайдер + флаги прокси/датацентра (не критично, если не ответит)
+  // Провайдер + флаги прокси/датацентра. Fail-closed: если ip-api не ответил
+  // (rate limit 45/мин на общих egress-IP воркеров, ошибка, timeout) — молчим,
+  // чтобы в Telegram не проскакивали "заходы без инфы" (это боты с подделанным UA).
   try {
-    const r = await fetch(`http://ip-api.com/json/${encodeURIComponent(ip)}?fields=status,isp,proxy,hosting&lang=ru`);
+    const r = await fetch(`http://ip-api.com/json/${encodeURIComponent(ip)}?fields=status,isp,proxy,hosting&lang=ru`, {
+      signal: AbortSignal.timeout(4000)
+    });
     const d = await r.json();
-    if (d && d.status === 'success') {
-      if (d.isp) loc += `\n🏢 ${d.isp}`;
-      const flags = [];
-      if (d.proxy) flags.push('прокси/VPN');
-      if (d.hosting) flags.push('дата-центр (бот/сервер)');
-      if (flags.length) loc += `\n⚠️ ${flags.join(', ')}`;
+    if (!d || d.status !== 'success') {
+      console.log('skip visit notify (ip-api fail):', ip);
+      return;
     }
-  } catch (e) { /* необязательно */ }
+    // Дата-центр / прокси / VPN = бот или сервер, не живой человек — не шлём
+    if (d.proxy || d.hosting) {
+      console.log('skip visit notify (datacenter/proxy):', ip);
+      return;
+    }
+    if (d.isp) loc += `\n🏢 ${d.isp}`;
+  } catch (e) {
+    console.log('skip visit notify (ip-api error):', ip, e && e.message);
+    return;
+  }
 
   const ua = request.headers.get('user-agent') || '';
   const path = new URL(request.url).pathname;

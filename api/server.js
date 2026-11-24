@@ -23,12 +23,20 @@ const escapeHtml = (s) =>
 const BOT_UA_RE = /bot|crawl|spider|slurp|curl|wget|python|java\/|httpclient|http-client|headless|lighthouse|monitor|uptime|pingdom|semrush|ahrefs|mj12|dotbot|petalbot|bingpreview|facebookexternalhit|twitterbot|linkedinbot|telegrambot|whatsapp|preview|metatag|go-http|okhttp|axios|node-fetch|postman|insomnia|archive|validator|scanner|fuzz|nmap|masscan|zgrab/i;
 const REAL_BROWSER_RE = /mozilla|chrome|safari|firefox|edg|opera|gecko/i;
 
+// Страны, для которых слать уведомления о заходах (гео рекламных кампаний)
+const NOTIFY_COUNTRIES = new Set(['UA']);
+
 function isSpider(req) {
   if (req.method !== 'GET') return true;
   const ua = req.headers['user-agent'] || '';
   if (!ua) return true;                       // скрипты часто шлют пустой UA
   if (!REAL_BROWSER_RE.test(ua)) return true; // нет признаков браузера
   if (BOT_UA_RE.test(ua)) return true;
+  // настоящий браузер всегда шлёт Accept-Language — скрипты почти никогда
+  if (!req.headers['accept-language']) return true;
+  // Chrome/Edge/Firefox всегда шлют Sec-Fetch-*; отсутствие = подделанный UA
+  if (/chrome|edg\//i.test(ua) && !req.headers['sec-fetch-mode']) return true;
+  if (/firefox/i.test(ua) && !req.headers['sec-fetch-mode']) return true;
   return false;
 }
 
@@ -77,10 +85,17 @@ async function notifyVisit(req, ip) {
   let geo = null;
   if (!isPrivate) {
     try {
-      const r = await fetch(`http://ip-api.com/json/${encodeURIComponent(ipClean)}?fields=status,country,regionName,city,isp,proxy,hosting&lang=ru`);
+      const r = await fetch(`http://ip-api.com/json/${encodeURIComponent(ipClean)}?fields=status,countryCode,country,regionName,city,isp,proxy,hosting&lang=ru`);
       const d = await r.json();
       if (d && d.status === 'success') geo = d;
     } catch (e) { /* гео не критично, уведомление всё равно уйдёт */ }
+  }
+
+  // Страна не из гео рекламных кампаний = нерелевантный трафик (боты/прокси,
+  // кликфрод). Скипаем молча.
+  if (geo && geo.countryCode && !NOTIFY_COUNTRIES.has(geo.countryCode)) {
+    console.log('skip visit notify (outside ad geo):', ipClean, geo.countryCode);
+    return;
   }
 
   let loc = '📍 Гео не определено';
